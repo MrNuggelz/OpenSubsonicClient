@@ -8,7 +8,9 @@ jobs:
   dependency-submission:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+        actions: read
+        contents: read
+        security-events: write
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK
@@ -16,5 +18,11 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      - name: Run detekt
+        run: ./gradlew detekt
+      - uses: github/codeql-action/upload-sarif@v3
+        if: success() || failure()
+        with:
+            sarif_file: build/reports/detekt/detekt.sarif
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4
