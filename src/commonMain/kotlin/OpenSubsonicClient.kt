@@ -50,7 +50,6 @@ public open class OpenSubsonicClient(
     private suspend inline fun <reified T> openSubsonicRequest(path: String, fieldName: String? = null): Result<T> =
         makeRequest(path).mapCatching { it.parseResponse(fieldName) }
 
-
     private suspend inline fun makeRequest(path: String): Result<HttpResponse> = runCatching {
         client.post(path) {
             generateSalt().let { salt ->
@@ -129,7 +128,9 @@ public abstract class OpenSubsonicError(override val message: String) : Throwabl
             val message: String,
         )
 
-        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("io.github.mrnuggelz.opensubsonic.OpenSubsonicError") {
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor(
+            "io.github.mrnuggelz.opensubsonic.OpenSubsonicError"
+        ) {
             element("code", serialDescriptor<Int>())
             element("message", serialDescriptor<String>())
         }
@@ -155,5 +156,3 @@ public abstract class OpenSubsonicError(override val message: String) : Throwabl
         }
     }
 }
-
-

@@ -33,7 +33,7 @@ val mockClient = OpenSubsonicClient(
     "testClient",
 )
 
-fun Parameters.validateDefaultParameters() = filter { it, _ -> it in listOf("u", "c", "f", "v") } == parameters {
+fun Parameters.validateDefaultParameters() = filter { name, _ -> name in listOf("u", "c", "f", "v") } == parameters {
     append("u", "test")
     append("c", "testClient")
     append("f", "json")
@@ -63,7 +63,7 @@ private fun errorResponse(code: Int, message: String) = """
 val genericError = errorResponse(0, "A generic error")
 val wrongCredentialResponse = errorResponse(40, "Wrong username or password")
 
-const val subsonicResponse = """
+const val SubsonicResponse = """
 {
   "subsonic-response": {
     "status": "ok",
@@ -76,6 +76,6 @@ const val subsonicResponse = """
 """
 
 fun Url.handlePath() = when (pathSegments.last()) {
-    "ping" -> subsonicResponse
+    "ping" -> SubsonicResponse
     else -> genericError
 }

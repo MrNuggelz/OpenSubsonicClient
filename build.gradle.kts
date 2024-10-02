@@ -1,7 +1,10 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotest.multiplatform)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.detekt)
 }
 
 group = "io.github.MrNuggelz"
@@ -20,7 +23,11 @@ kotlin {
     jvmToolchain(21)
 
     jvm()
-    js()
+    js {
+        nodejs()
+        browser()
+        binaries.library()
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -36,8 +43,27 @@ kotlin {
             implementation(libs.ktor.client.mock)
         }
         jvmTest.dependencies {
+            implementation(libs.slf4jSimple)
             implementation(libs.kotest.junit)
             implementation(libs.ktor.client.cio)
         }
     }
+}
+
+detekt {
+    source.setFrom(".")
+    buildUponDefaultConfig = true
+    dependencies {
+        detektPlugins(libs.plugins.detektFormatting.map { "${it.pluginId}:${it.version}" })
+    }
+}
+
+tasks.register<Detekt>("detektFix") {
+    setSource(".")
+    buildUponDefaultConfig = true
+    dependencies {
+        detektPlugins(libs.plugins.detektFormatting.map { "${it.pluginId}:${it.version}" })
+    }
+    ignoreFailures = true
+    autoCorrect = true
 }

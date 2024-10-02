@@ -2,6 +2,7 @@
 kotlin = "2.0.20"
 ktor = "2.3.12"
 kotest = "5.9.1"
+detekt = "1.23.6"
 
 [libraries]
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -19,8 +20,11 @@ cryptohash = { module = "org.kotlincrypto.hash:md", version = "0.5.3"} # used fo
 # jvm
 kotest-junit = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest"}
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+slf4jSimple = { module = "org.slf4j:slf4j-simple", version = "2.0.3" }
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin"}
 kotest-multiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest"}
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
+detektFormatting = { id = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
