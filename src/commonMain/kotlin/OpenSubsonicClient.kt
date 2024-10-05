@@ -8,6 +8,7 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ParametersBuilder
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -29,6 +30,7 @@ public open class OpenSubsonicClient(
     private val username: String,
     private val password: String,
     private val clientName: String,
+    private val debugRequest: suspend (HttpResponse.() -> Unit) = {},
 ) {
     private val json = Json { ignoreUnknownKeys = true }
     private val client = HttpClient(engine) {
@@ -44,18 +46,24 @@ public open class OpenSubsonicClient(
         install(ContentNegotiation) { json(json) }
     }
 
-    public suspend fun ping(): Result<OpenSubsonicResponse> =
-        openSubsonicRequest("ping", null)
+    internal suspend inline fun <reified T> openSubsonicRequest(
+        path: String,
+        fieldName: String? = null,
+        crossinline additionalParameters: ParametersBuilder.() -> Unit = {},
+    ): Result<T> = makeRequest(path, additionalParameters).mapCatching { it.parseResponse(fieldName) }
 
-    private suspend inline fun <reified T> openSubsonicRequest(path: String, fieldName: String? = null): Result<T> =
-        makeRequest(path).mapCatching { it.parseResponse(fieldName) }
-
-    private suspend inline fun makeRequest(path: String): Result<HttpResponse> = runCatching {
+    private suspend inline fun makeRequest(
+        path: String,
+        crossinline additionalParameters: ParametersBuilder.() -> Unit = {},
+    ): Result<HttpResponse> = runCatching {
         client.post(path) {
             generateSalt().let { salt ->
                 parameter("t", password.plus(salt).md5Hash())
                 parameter("s", salt)
             }
+            url.parameters.additionalParameters()
+        }.also { response ->
+            debugRequest(response)
         }
     }
 

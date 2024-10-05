@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.0.20"
 ktor = "2.3.12"
-kotest = "5.9.1"
+kotest = "6.0.0.M1"
 detekt = "1.23.6"
 
 [libraries]
@@ -9,6 +9,7 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.1" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.8.0" }
 
 # testing
 # common
@@ -19,7 +20,6 @@ cryptohash = { module = "org.kotlincrypto.hash:md", version = "0.5.3"} # used fo
 
 # jvm
 kotest-junit = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest"}
-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 slf4jSimple = { module = "org.slf4j:slf4j-simple", version = "2.0.3" }
 
 [plugins]
