@@ -1,4 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -25,9 +26,22 @@ kotlin {
     jvm()
     js {
         nodejs()
-        browser()
-        binaries.library()
     }
+
+    /* Enable when there is support in ktor-client
+    wasmJs {
+        nodejs()
+         browser()
+    }
+     */
+
+    /* Enable when there is support in ktor-client
+    wasmWasi {
+        nodejs()
+    }
+     */
+
+    nativeTargets()
 
     sourceSets {
         commonMain.dependencies {
@@ -36,6 +50,7 @@ kotlin {
             implementation(libs.cryptohash)
             implementation(libs.ktor.client.json)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.coroutines)
         }
         commonTest.dependencies {
             implementation(libs.kotest.frameworkEngine)
@@ -45,7 +60,6 @@ kotlin {
         jvmTest.dependencies {
             implementation(libs.slf4jSimple)
             implementation(libs.kotest.junit)
-            implementation(libs.ktor.client.cio)
         }
     }
 }
@@ -66,4 +80,27 @@ tasks.register<Detekt>("detektFix") {
     }
     ignoreFailures = true
     autoCorrect = true
+}
+
+private fun KotlinMultiplatformExtension.nativeTargets() {
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    macosX64()
+    macosArm64()
+
+    tvosX64()
+    tvosArm64()
+    tvosSimulatorArm64()
+
+    watchosArm32()
+    watchosArm64()
+    watchosX64()
+    watchosSimulatorArm64()
+
+    mingwX64()
+
+    linuxX64()
+    linuxArm64()
 }

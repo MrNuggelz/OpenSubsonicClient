@@ -77,5 +77,6 @@ const val SubsonicResponse = """
 
 fun Url.handlePath() = when (pathSegments.last()) {
     "ping" -> SubsonicResponse
+    "getLicense" -> GetLicenseResponse
     else -> genericError
 }
