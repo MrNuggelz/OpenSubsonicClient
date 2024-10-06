@@ -7,7 +7,7 @@ import io.kotest.core.spec.style.stringSpec
 import kotlinx.datetime.Instant
 
 val systemAPITestsFactory = stringSpec {
-    expectEndpointResponse(
+    expectResponse(
         "ping with wrong credentials",
         "InvalidCredentials error",
         OpenSubsonicError.InvalidCredentials("Wrong username or password"),
@@ -20,11 +20,11 @@ val systemAPITestsFactory = stringSpec {
         ),
     ) { ping() }
 
-    expectEndpointResponse("ping", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
+    expectResponse("ping", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
         ping()
     }
 
-    expectEndpointResponse(
+    expectResponse(
         "license",
         "subsonic license",
         License(
