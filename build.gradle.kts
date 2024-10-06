@@ -1,11 +1,9 @@
-import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotest.multiplatform)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.detekt)
 }
 
 group = "io.github.MrNuggelz"
@@ -60,26 +58,41 @@ kotlin {
         jvmTest.dependencies {
             implementation(libs.slf4jSimple)
             implementation(libs.kotest.junit)
+            implementation("io.ktor:ktor-client-cio:2.3.12")
         }
     }
 }
+val detekt by configurations.creating
 
-detekt {
-    source.setFrom(".")
-    buildUponDefaultConfig = true
-    dependencies {
-        detektPlugins(libs.plugins.detektFormatting.map { "${it.pluginId}:${it.version}" })
-    }
+dependencies {
+    detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.23.3")
+    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.6")
 }
 
-tasks.register<Detekt>("detektFix") {
-    setSource(".")
-    buildUponDefaultConfig = true
-    dependencies {
-        detektPlugins(libs.plugins.detektFormatting.map { "${it.pluginId}:${it.version}" })
-    }
-    ignoreFailures = true
-    autoCorrect = true
+tasks.register<JavaExec>("detekt") {
+    mainClass = "io.gitlab.arturbosch.detekt.cli.Main"
+    classpath = detekt
+
+    val input = projectDir
+    val config = "$projectDir/detekt.yml"
+    val exclude = ".*/build/.*,.*/resources/.*"
+    val report = "sarif:${layout.buildDirectory.file("reports/detekt/detekt.sarif").get()}"
+    val params = listOf("-i", input, "-c", config, "-ex", exclude, "-r", report, "--build-upon-default-config")
+
+    args(params)
+}
+
+tasks.register<JavaExec>("detektFix") {
+    mainClass = "io.gitlab.arturbosch.detekt.cli.Main"
+    classpath = detekt
+
+    val input = projectDir
+    val config = "$projectDir/detekt.yml"
+    val exclude = ".*/build/.*,.*/resources/.*"
+    val params = listOf("-i", input, "-c", config, "-ex", exclude, "--auto-correct", "--build-upon-default-config")
+    setIgnoreExitValue(true)
+
+    args(params)
 }
 
 private fun KotlinMultiplatformExtension.nativeTargets() {
