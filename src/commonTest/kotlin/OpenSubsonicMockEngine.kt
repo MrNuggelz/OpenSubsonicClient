@@ -89,7 +89,19 @@ const val SubsonicResponse = """
 }
 """
 
-fun <T> StringSpecRootScope.expectEndpointResponse(
+fun <T> StringSpecRootScope.responseShouldBe(
+    methodName: String,
+    returnDescription: String,
+    client: OpenSubsonicClient = mockClient,
+    methodCall: suspend OpenSubsonicClient.() -> Result<T>,
+    block: (T) -> Unit,
+) {
+    "$methodName should return $returnDescription" {
+        methodCall(client).shouldBeSuccess(block)
+    }
+}
+
+fun <T> StringSpecRootScope.expectResponse(
     methodName: String,
     returnDescription: String,
     expected: T,
@@ -103,7 +115,7 @@ fun <T> StringSpecRootScope.expectEndpointResponse(
     }
 }
 
-fun <T> StringSpecRootScope.expectEndpointResponse(
+fun <T> StringSpecRootScope.expectResponse(
     methodName: String,
     returnDescription: String,
     expected: Throwable,
@@ -125,7 +137,41 @@ val expectedOpenSubsonicResponse = OpenSubsonicResponse(
     version = "1.16.1"
 )
 
+@Suppress("LongMethod", "CyclomaticComplexMethod")
 fun Url.handlePath() = when (pathSegments.last()) {
+    "getAlbumList" -> handleParameters(
+        parameters {
+            append("type", "random")
+            append("size", "10")
+            append("offset", "0")
+        },
+        GetAlbumListResponse
+    )
+    "getAlbumList2" -> handleParameters(
+        parameters {
+            append("type", "random")
+            append("size", "10")
+            append("offset", "0")
+        },
+        GetAlbumList2Response
+    )
+    "getRandomSongs" -> handleParameters(
+        parameters {
+            append("size", "1")
+        },
+        GetRandomSongsResponse
+    )
+    "getNowPlaying" -> GetNowPlayingResponse
+    "getSongsByGenre" -> handleParameters(
+        parameters {
+            append("genre", "Electronic")
+            append("count", "1")
+            append("offset", "0")
+        },
+        GetSongsByGenreResponse
+    )
+    "getStarred" -> GetStarredResponse
+    "getStarred2" -> GetStarred2Response
     "star" -> handleParameters(
         parameters {
             append("albumId", "1")

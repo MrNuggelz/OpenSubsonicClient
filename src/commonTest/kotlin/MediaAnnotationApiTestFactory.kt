@@ -5,16 +5,16 @@ import io.github.mrnuggelz.opensubsonic.unstar
 import io.kotest.core.spec.style.stringSpec
 
 val mediaAnnotationApiTestFactory = stringSpec {
-    expectEndpointResponse("star", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
+    expectResponse("star", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
         star(albumId = "1")
     }
-    expectEndpointResponse("unstar", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
+    expectResponse("unstar", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
         unstar(albumId = "1")
     }
-    expectEndpointResponse("setRating", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
+    expectResponse("setRating", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
         setRating("someId", 1)
     }
-    expectEndpointResponse("scrobble", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
+    expectResponse("scrobble", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
         scrobble("someId")
     }
 }
