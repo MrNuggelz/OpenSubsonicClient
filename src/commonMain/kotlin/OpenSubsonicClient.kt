@@ -8,11 +8,14 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ParametersBuilder
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.descriptors.serialDescriptor
@@ -50,7 +53,15 @@ public open class OpenSubsonicClient(
         path: String,
         fieldName: String? = null,
         crossinline additionalParameters: ParametersBuilder.() -> Unit = {},
-    ): Result<T> = makeRequest(path, additionalParameters).mapCatching { it.parseResponse(fieldName) }
+    ): Result<T> = makeRequest(path, additionalParameters).mapCatching { resp ->
+        runCatching {
+            resp.parseResponse<T>(fieldName)
+        }.onFailure {
+            if (it is SerializationException) {
+                println("error for response: ${resp.bodyAsText()}")
+            }
+        }.getOrThrow()
+    }
 
     private suspend inline fun makeRequest(
         path: String,
@@ -164,3 +175,9 @@ public abstract class OpenSubsonicError(override val message: String) : Throwabl
         }
     }
 }
+
+internal fun ParametersBuilder.parameter(key: String, value: String?) = value?.let { append(key, value) }
+internal fun ParametersBuilder.parameter(key: String, value: Boolean?) = parameter(key, value?.toString())
+internal fun ParametersBuilder.parameter(key: String, value: Int?) = parameter(key, value?.toString())
+internal fun ParametersBuilder.parameter(key: String, value: Instant?) =
+    parameter(key, value?.toEpochMilliseconds()?.toString())

@@ -1,11 +1,3 @@
-output-reports:
-    active: true
-    exclude:
-     - 'TxtOutputReport'
-     - 'XmlOutputReport'
-     - 'HtmlOutputReport'
-     - 'MdOutputReport'
-
 complexity:
     LongParameterList:
         active: false
@@ -19,5 +11,7 @@ naming:
         constantPattern: '[A-Z][_A-Za-z0-9]*'
 
 style:
+    MaxLineLength:
+        active: false # use MaximumLineLength from formatting
     MagicNumber:
         active: false

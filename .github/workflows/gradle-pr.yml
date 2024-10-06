@@ -23,11 +23,8 @@ jobs:
         uses: gradle/actions/dependency-submission@v4
       - name: 'Dependency Review'
         uses: actions/dependency-review-action@v4
-  build:
+  test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK
@@ -35,13 +32,14 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
-      - name: Run detekt
-        run: ./gradlew detekt
-      - uses: github/codeql-action/upload-sarif@v3
-        if: success() || failure()
-        with:
-          sarif_file: build/reports/detekt/detekt.sarif
+      - name: Validate Gradle Wrapper
+        uses: gradle/actions/wrapper-validation@v3
       - name: Run all tests with Gradle Wrapper
         run: ./gradlew allTest
+      - name: Upload Build reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+            name: build-reports-${{ github.action }}-${{ github.run_id }}
+            path: build/reports/tests/allTests
+
