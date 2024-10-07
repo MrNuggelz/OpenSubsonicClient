@@ -172,20 +172,100 @@ fun Url.handlePath() = when (pathSegments.last()) {
     )
     "getStarred" -> GetStarredResponse
     "getStarred2" -> GetStarred2Response
+    "getAlbum" -> handleParameters(
+        parameters {
+            append("id", "a70f5f4d781dfa00020e8023698318c0")
+        },
+        GetAlbumResponse
+    )
+    "getSong" -> handleParameters(
+        parameters {
+            append("id", "a70f5f4d781dfa00020e8023698318c0")
+        },
+        GetSongResponse
+    )
+    "getArtists" -> GetArtistsResponse
+    "getGenres" -> GetGenresResponse
+    "getMusicFolders" -> GetMusicFoldersResponse
+    "getIndexes" -> handleParameters(
+        parameters {
+            append("musicFolderId", "someFolder")
+        },
+        GetIndexesResponse
+    )
+    "getMusicDirectory" -> handleParameters(
+        parameters {
+            append("id", "a70f5f4d781dfa00020e8023698318c0")
+        },
+        GetMusicDirectoryResponse
+    )
+    "getArtist" -> handleParameters(
+        parameters {
+            append("id", "a70f5f4d781dfa00020e8023698318c0")
+        },
+        GetArtistResponse
+    )
+    "getArtistInfo" -> handleParameters(
+        parameters {
+            append("id", "someId")
+            append("count", "2")
+            append("includeNotPresent", "false")
+        },
+        GetArtistInfoResponse
+    )
+    "getArtistInfo2" -> handleParameters(
+        parameters {
+            append("id", "someId")
+            append("count", "2")
+            append("includeNotPresent", "false")
+        },
+        GetArtistInfo2Response
+    )
+    "getAlbumInfo" -> handleParameters(
+        parameters {
+            append("id", "a70f5f4d781dfa00020e8023698318c0")
+        },
+        GetAlbumInfoResponse
+    )
+    "getAlbumInfo2" -> handleParameters(
+        parameters {
+            append("id", "a70f5f4d781dfa00020e8023698318c0")
+        },
+        GetAlbumInfo2Response
+    )
+    "getTopSongs" -> handleParameters(
+        parameters {
+            append("artist", "someArtist")
+            append("count", "2")
+        },
+        GetTopSongsResponse
+    )
+    "getSimilarSongs" -> handleParameters(
+        parameters {
+            append("id", "someId")
+            append("count", "2")
+        },
+        GetSimilarSongsResponse
+    )
+    "getSimilarSongs2" -> handleParameters(
+        parameters {
+            append("id", "someId")
+            append("count", "2")
+        },
+        GetSimilarSongs2Response
+    )
     "star" -> handleParameters(
         parameters {
             append("albumId", "1")
         },
         SubsonicResponse
     )
-
     "unstar" -> handleParameters(
         parameters {
             append("albumId", "1")
         },
         SubsonicResponse
     )
-
     "setRating" -> handleParameters(
         parameters {
             append("id", "someId")
@@ -193,7 +273,6 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         SubsonicResponse
     )
-
     "scrobble" -> handleParameters(
         parameters {
             append("id", "someId")
@@ -201,7 +280,6 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         SubsonicResponse
     )
-
     "ping" -> SubsonicResponse
     "getLicense" -> GetLicenseResponse
     else -> genericError
