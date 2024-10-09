@@ -12,3 +12,6 @@ class MediaAnnotationAPITest : StringSpec({
 class SystemAPITest : StringSpec({
     include(systemAPITestsFactory)
 })
+class SearchingAPITest : StringSpec({
+    include(searchingApiTestsFactory)
+})
