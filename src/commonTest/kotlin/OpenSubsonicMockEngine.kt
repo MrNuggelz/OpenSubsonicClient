@@ -280,6 +280,30 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         SubsonicResponse
     )
+    "search2" -> handleParameters(
+        parameters {
+            append("query", "2 Mello")
+            append("artistCount", "1")
+            append("artistOffset", "0")
+            append("albumCount", "1")
+            append("albumOffset", "0")
+            append("songCount", "1")
+            append("songOffset", "0")
+        },
+        Search2Response
+    )
+    "search3" -> handleParameters(
+        parameters {
+            append("query", "2 Mello")
+            append("artistCount", "1")
+            append("artistOffset", "0")
+            append("albumCount", "1")
+            append("albumOffset", "0")
+            append("songCount", "1")
+            append("songOffset", "0")
+        },
+        Search3Response
+    )
     "ping" -> SubsonicResponse
     "getLicense" -> GetLicenseResponse
     else -> genericError
