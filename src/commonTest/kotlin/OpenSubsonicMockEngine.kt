@@ -342,6 +342,41 @@ fun Url.handlePath() = when (pathSegments.last()) {
         SubsonicResponse
     )
 
+    "getPlaylists" -> handleParameters(
+        parameters { append("username", "someUser") },
+        GetPlaylistsResponse
+    )
+
+    "getPlaylist" -> handleParameters(
+        parameters { append("id", "playlistId") },
+        GetPlaylistResponse
+    )
+
+    "createPlaylist" -> handleParameters(
+        parameters {
+            append("name", "playlist name")
+            appendAll("songId", listOf("songId1", "songId2"))
+        },
+        GetPlaylistResponse
+    )
+
+    "updatePlaylist" -> handleParameters(
+        parameters {
+            append("playlistId", "playlistId")
+            append("playlistName", "new playlist name")
+            append("comment", "some comment")
+            append("public", "true")
+            append("songIdToAdd", "songToAdd")
+            append("songIndexToRemove", "1")
+        },
+        SubsonicResponse
+    )
+
+    "deletePlaylist" -> handleParameters(
+        parameters { append("id", "playlistId") },
+        SubsonicResponse
+    )
+
     "ping" -> SubsonicResponse
     "getLicense" -> GetLicenseResponse
     else -> genericError
