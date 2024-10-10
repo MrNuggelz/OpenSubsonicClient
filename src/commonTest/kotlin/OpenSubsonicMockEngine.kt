@@ -147,6 +147,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetAlbumListResponse
     )
+
     "getAlbumList2" -> handleParameters(
         parameters {
             append("type", "random")
@@ -155,12 +156,14 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetAlbumList2Response
     )
+
     "getRandomSongs" -> handleParameters(
         parameters {
             append("size", "1")
         },
         GetRandomSongsResponse
     )
+
     "getNowPlaying" -> GetNowPlayingResponse
     "getSongsByGenre" -> handleParameters(
         parameters {
@@ -170,6 +173,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetSongsByGenreResponse
     )
+
     "getStarred" -> GetStarredResponse
     "getStarred2" -> GetStarred2Response
     "getAlbum" -> handleParameters(
@@ -178,12 +182,14 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetAlbumResponse
     )
+
     "getSong" -> handleParameters(
         parameters {
             append("id", "a70f5f4d781dfa00020e8023698318c0")
         },
         GetSongResponse
     )
+
     "getArtists" -> GetArtistsResponse
     "getGenres" -> GetGenresResponse
     "getMusicFolders" -> GetMusicFoldersResponse
@@ -193,18 +199,21 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetIndexesResponse
     )
+
     "getMusicDirectory" -> handleParameters(
         parameters {
             append("id", "a70f5f4d781dfa00020e8023698318c0")
         },
         GetMusicDirectoryResponse
     )
+
     "getArtist" -> handleParameters(
         parameters {
             append("id", "a70f5f4d781dfa00020e8023698318c0")
         },
         GetArtistResponse
     )
+
     "getArtistInfo" -> handleParameters(
         parameters {
             append("id", "someId")
@@ -213,6 +222,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetArtistInfoResponse
     )
+
     "getArtistInfo2" -> handleParameters(
         parameters {
             append("id", "someId")
@@ -221,18 +231,21 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetArtistInfo2Response
     )
+
     "getAlbumInfo" -> handleParameters(
         parameters {
             append("id", "a70f5f4d781dfa00020e8023698318c0")
         },
         GetAlbumInfoResponse
     )
+
     "getAlbumInfo2" -> handleParameters(
         parameters {
             append("id", "a70f5f4d781dfa00020e8023698318c0")
         },
         GetAlbumInfo2Response
     )
+
     "getTopSongs" -> handleParameters(
         parameters {
             append("artist", "someArtist")
@@ -240,6 +253,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetTopSongsResponse
     )
+
     "getSimilarSongs" -> handleParameters(
         parameters {
             append("id", "someId")
@@ -247,6 +261,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetSimilarSongsResponse
     )
+
     "getSimilarSongs2" -> handleParameters(
         parameters {
             append("id", "someId")
@@ -254,18 +269,21 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         GetSimilarSongs2Response
     )
+
     "star" -> handleParameters(
         parameters {
             append("albumId", "1")
         },
         SubsonicResponse
     )
+
     "unstar" -> handleParameters(
         parameters {
             append("albumId", "1")
         },
         SubsonicResponse
     )
+
     "setRating" -> handleParameters(
         parameters {
             append("id", "someId")
@@ -273,6 +291,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         SubsonicResponse
     )
+
     "scrobble" -> handleParameters(
         parameters {
             append("id", "someId")
@@ -280,6 +299,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         SubsonicResponse
     )
+
     "search2" -> handleParameters(
         parameters {
             append("query", "2 Mello")
@@ -292,6 +312,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         Search2Response
     )
+
     "search3" -> handleParameters(
         parameters {
             append("query", "2 Mello")
@@ -304,6 +325,23 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         Search3Response
     )
+
+    "getShares" -> GetSharesResponse
+    "createShare" -> handleParameters(
+        parameters { append("id", "shareId") },
+        GetSharesResponse
+    )
+
+    "updateShare" -> handleParameters(
+        parameters { append("id", "shareId") },
+        SubsonicResponse
+    )
+
+    "deleteShare" -> handleParameters(
+        parameters { append("id", "shareId") },
+        SubsonicResponse
+    )
+
     "ping" -> SubsonicResponse
     "getLicense" -> GetLicenseResponse
     else -> genericError

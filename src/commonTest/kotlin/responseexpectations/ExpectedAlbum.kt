@@ -1,7 +1,6 @@
 package responseexpectations
 
 import io.github.mrnuggelz.opensubsonic.responses.Album
-import io.github.mrnuggelz.opensubsonic.responses.Song
 
 internal val expectedAlbum = Album(
     id = "200000021",
@@ -16,58 +15,5 @@ internal val expectedAlbum = Album(
     starred = null,
     year = 2005,
     genre = "Hip-Hop",
-    song = listOf(
-        Song(
-            id = "300000116",
-            parent = "200000021",
-            isDir = false,
-            title = "Can I Help U?",
-            album = "Forget and Remember",
-            artist = "Comfort Fit",
-            track = 1,
-            year = 2005,
-            genre = "Hip-Hop",
-            coverArt = "300000116",
-            size = 2811819,
-            contentType = "audio/mpeg",
-            suffix = "mp3",
-            duration = 103,
-            bitRate = 216,
-            bitDepth = 16,
-            samplingRate = 44100,
-            channelCount = 2,
-            path = "user/Comfort Fit/Forget And Remember/1 - Can I Help U?.mp3",
-            isVideo = false,
-            discNumber = 1,
-            albumId = "200000021",
-            artistId = "100000036",
-            type = "music",
-        ),
-        Song(
-            id = "300000121",
-            parent = "200000021",
-            isDir = false,
-            title = "Planetary Picknick",
-            album = "Forget and Remember",
-            artist = "Comfort Fit",
-            track = 2,
-            year = 2005,
-            genre = "Hip-Hop",
-            coverArt = "300000121",
-            size = 10715592,
-            contentType = "audio/mpeg",
-            suffix = "mp3",
-            duration = 358,
-            bitRate = 238,
-            bitDepth = 16,
-            samplingRate = 44100,
-            channelCount = 2,
-            path = "user/Comfort Fit/Forget And Remember/2 - Planetary Picknick.mp3",
-            isVideo = false,
-            discNumber = 1,
-            albumId = "200000021",
-            artistId = "100000036",
-            type = "music",
-        )
-    )
+    songs = listOf(songForgetAndRemember, planetaryPicknick)
 )

@@ -15,3 +15,6 @@ class SystemAPITest : StringSpec({
 class SearchingAPITest : StringSpec({
     include(searchingApiTestsFactory)
 })
+class ShareAPITest : StringSpec({
+    include(shareAPITestsFactory)
+})

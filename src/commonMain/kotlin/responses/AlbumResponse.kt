@@ -1,6 +1,7 @@
 package io.github.mrnuggelz.opensubsonic.responses
 
 import kotlinx.datetime.Instant
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -57,7 +58,8 @@ public data class Album(
     val releaseDate: ItemDate? = null,
     val isCompilation: Boolean? = null,
     val discTitles: List<DiscTitle> = emptyList(),
-    val song: List<Song> = emptyList(),
+    @SerialName("song")
+    val songs: List<Song> = emptyList(),
 )
 
 @Serializable

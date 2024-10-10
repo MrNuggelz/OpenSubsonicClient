@@ -59,6 +59,7 @@ public open class OpenSubsonicClient(
         }.onFailure {
             if (it is SerializationException) {
                 println("error for response: ${resp.bodyAsText()}")
+                it.printStackTrace()
             }
         }.getOrThrow()
     }
