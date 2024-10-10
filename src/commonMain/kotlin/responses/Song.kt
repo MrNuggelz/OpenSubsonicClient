@@ -27,7 +27,7 @@ public data class Song(
     val path: String? = null,
     val isVideo: Boolean? = null,
     val userRating: Int? = null,
-    val avarageRating: Float? = null,
+    val averageRating: Float? = null,
     val playCount: Long? = null,
     val discNumber: Int? = null,
     val created: String? = null,

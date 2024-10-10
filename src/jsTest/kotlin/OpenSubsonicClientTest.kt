@@ -18,3 +18,6 @@ class SearchingAPITest : StringSpec({
 class ShareAPITest : StringSpec({
     include(shareAPITestsFactory)
 })
+class PlaylistAPITest : StringSpec({
+    include(playlistAPITestsFactory)
+})

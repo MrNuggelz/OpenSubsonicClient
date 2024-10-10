@@ -18,7 +18,7 @@ public data class NowPlayingSong(
 
 internal object NowPlayingSongSerializer : KSerializer<NowPlayingSong> {
     override val descriptor = buildClassSerialDescriptor(
-        "io.github.mrnuggelz.opensubsonic.NowPlayingSong"
+        "io.github.mrnuggelz.opensubsonic.responses.NowPlayingSong"
     ) {
         element("song", serialDescriptor<Song>())
         element("username", serialDescriptor<String>())
