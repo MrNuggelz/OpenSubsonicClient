@@ -21,3 +21,6 @@ class ShareAPITest : StringSpec({
 class PlaylistAPITest : StringSpec({
     include(playlistAPITestsFactory)
 })
+class InternetRadioStationAPITest : StringSpec({
+    include(internetRadioStationApiTestFactory)
+})
