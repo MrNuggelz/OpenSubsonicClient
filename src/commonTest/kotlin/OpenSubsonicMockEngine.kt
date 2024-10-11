@@ -377,6 +377,28 @@ fun Url.handlePath() = when (pathSegments.last()) {
         SubsonicResponse
     )
 
+    "getInternetRadioStations" -> GetInternetRadioStations
+    "createInternetRadioStation" -> handleParameters(
+        parameters {
+            append("name", "4ZZZ Community Radio")
+            append("streamUrl", "https://stream.4zzz.org.au:9200/4zzz")
+            append("homepageUrl", "https://4zzzfm.org.au")
+        },
+        SubsonicResponse
+    )
+
+    "updateInternetRadioStation" -> handleParameters(
+        parameters {
+            append("id", "1")
+            append("name", "4ZZZ Community Radio")
+            append("streamUrl", "https://stream.4zzz.org.au:9200/4zzz")
+            append("homepageUrl", "https://4zzzfm.org.au")
+        },
+        SubsonicResponse
+    )
+
+    "deleteInternetRadioStation" -> handleParameters(parameters { append("id", "1") }, SubsonicResponse)
+
     "ping" -> SubsonicResponse
     "getLicense" -> GetLicenseResponse
     else -> genericError
