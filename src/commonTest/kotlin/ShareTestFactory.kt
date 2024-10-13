@@ -5,7 +5,7 @@ import io.github.mrnuggelz.opensubsonic.updateShare
 import io.kotest.core.spec.style.stringSpec
 import responseexpectations.expectedShares
 
-val shareAPITestsFactory = stringSpec {
+val shareAPITestFactory = stringSpec {
     expectResponse("shares", "existing shares", expectedShares) { shares() }
     expectResponse("createShare", "existing shares", expectedShares) { createShare("shareId") }
 

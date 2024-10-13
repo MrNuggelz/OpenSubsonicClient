@@ -5,7 +5,7 @@ import io.github.mrnuggelz.opensubsonic.internetRadioStations
 import io.github.mrnuggelz.opensubsonic.updateInternetRadioStation
 import io.kotest.core.spec.style.stringSpec
 
-val internetRadioStationApiTestFactory = stringSpec {
+val internetRadioStationAPITestFactory = stringSpec {
     expectResponse(
         "internetRadioStations",
         "existing internet radio stations",

@@ -6,7 +6,7 @@ import io.github.mrnuggelz.opensubsonic.ping
 import io.kotest.core.spec.style.stringSpec
 import kotlinx.datetime.Instant
 
-val systemAPITestsFactory = stringSpec {
+val systemAPITestFactory = stringSpec {
     expectResponse(
         "ping with wrong credentials",
         "InvalidCredentials error",

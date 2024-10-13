@@ -1,26 +1,29 @@
 import io.kotest.core.spec.style.StringSpec
 
 class AlbumSongListAPITest : StringSpec({
-    include(albumSongListsApiTestFactory)
+    include(albumSongListsAPITestFactory)
 })
 class BrowsingAPITest : StringSpec({
-    include(browsingApiTestFactory)
+    include(browsingAPITestFactory)
 })
 class MediaAnnotationAPITest : StringSpec({
-    include(mediaAnnotationApiTestFactory)
+    include(mediaAnnotationAPITestFactory)
 })
 class SystemAPITest : StringSpec({
-    include(systemAPITestsFactory)
+    include(systemAPITestFactory)
 })
 class SearchingAPITest : StringSpec({
-    include(searchingApiTestsFactory)
+    include(searchingAPITestFactory)
 })
 class ShareAPITest : StringSpec({
-    include(shareAPITestsFactory)
+    include(shareAPITestFactory)
 })
 class PlaylistAPITest : StringSpec({
-    include(playlistAPITestsFactory)
+    include(playlistAPITestFactory)
 })
 class InternetRadioStationAPITest : StringSpec({
-    include(internetRadioStationApiTestFactory)
+    include(internetRadioStationAPITestFactory)
+})
+class ChatAPITest : StringSpec({
+    include(chatAPITestFactory)
 })
