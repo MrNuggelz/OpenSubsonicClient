@@ -15,5 +15,5 @@ internal val expectedAlbum = Album(
     starred = null,
     year = 2005,
     genre = "Hip-Hop",
-    songs = listOf(songForgetAndRemember, planetaryPicknick)
+    songs = listOf(songCanIHelpU, songPlanetaryPicknick)
 )
