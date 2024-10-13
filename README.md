@@ -108,8 +108,8 @@ Bookmarks:
 - [x] savePlayQueue
 
 Media library scanning:
-- [ ] getScanStatus
-- [ ] startScan
+- [x] getScanStatus
+- [x] startScan
 
 
 
