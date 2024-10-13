@@ -7,7 +7,7 @@ import io.kotest.core.spec.style.stringSpec
 import responseexpectations.expectedPlaylist
 import responseexpectations.expectedPlaylists
 
-val playlistAPITestsFactory = stringSpec {
+val playlistAPITestFactory = stringSpec {
     expectResponse("getPlaylists", "existing playlists for user", expectedPlaylists) { playlists("someUser") }
     expectResponse("getPlaylist", "the playlist", expectedPlaylist) { playlist("playlistId") }
     expectResponse("createPlaylist", "the playlist", expectedPlaylist) {

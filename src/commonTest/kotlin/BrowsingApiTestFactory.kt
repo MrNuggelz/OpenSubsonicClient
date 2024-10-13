@@ -25,7 +25,7 @@ import io.kotest.matchers.shouldBe
 import responseexpectations.expectedAlbum
 import responseexpectations.expectedSong
 
-val browsingApiTestFactory = stringSpec {
+val browsingAPITestFactory = stringSpec {
     expectResponse("album", "the album", expectedAlbum) {
         album("a70f5f4d781dfa00020e8023698318c0")
     }

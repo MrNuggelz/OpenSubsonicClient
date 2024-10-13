@@ -9,7 +9,7 @@ import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.shouldBe
 import kotlinx.datetime.Instant
 
-val searchingApiTestsFactory = stringSpec {
+val searchingAPITestFactory = stringSpec {
     responseShouldBe(
         "search2",
         "expected album, artist and song",

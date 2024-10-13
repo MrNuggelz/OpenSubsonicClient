@@ -4,7 +4,7 @@ import io.github.mrnuggelz.opensubsonic.star
 import io.github.mrnuggelz.opensubsonic.unstar
 import io.kotest.core.spec.style.stringSpec
 
-val mediaAnnotationApiTestFactory = stringSpec {
+val mediaAnnotationAPITestFactory = stringSpec {
     expectResponse("star", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
         star(albumId = "1")
     }

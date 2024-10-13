@@ -16,6 +16,7 @@ import io.ktor.http.headersOf
 import io.ktor.http.parameters
 import io.ktor.util.filter
 import org.kotlincrypto.hash.md.MD5
+import responses.GetChatMessages
 
 val OpenSubsonicMockEngine = MockEngine { request ->
     val body: String = if (request.url.parameters.validateDefaultParameters()) {
@@ -398,6 +399,9 @@ fun Url.handlePath() = when (pathSegments.last()) {
     )
 
     "deleteInternetRadioStation" -> handleParameters(parameters { append("id", "1") }, SubsonicResponse)
+
+    "getChatMessages" -> handleParameters(parameters { append("since", "1678935707000") }, GetChatMessages)
+    "addChatMessage" -> handleParameters(parameters { append("message", "hello world!") }, SubsonicResponse)
 
     "ping" -> SubsonicResponse
     "getLicense" -> GetLicenseResponse
