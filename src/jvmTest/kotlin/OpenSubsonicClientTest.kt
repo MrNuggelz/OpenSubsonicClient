@@ -30,3 +30,6 @@ class ChatAPITest : StringSpec({
 class BookmarksAPITest : StringSpec({
     include(bookmarkAPITestFactory)
 })
+class MediaLibraryScanningAPITest : StringSpec({
+    include(mediaLibraryScanningAPITestFactory)
+})

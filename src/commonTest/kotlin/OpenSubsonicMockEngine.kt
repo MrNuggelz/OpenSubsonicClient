@@ -422,6 +422,8 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         SubsonicResponse
     )
+    "getScanStatus" -> GetScanStatusResponse
+    "startScan" -> GetScanStatusResponse
 
     "ping" -> SubsonicResponse
     "getLicense" -> GetLicenseResponse
