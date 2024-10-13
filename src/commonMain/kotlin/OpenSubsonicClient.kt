@@ -180,5 +180,6 @@ public abstract class OpenSubsonicError(override val message: String) : Throwabl
 internal fun ParametersBuilder.parameter(key: String, value: String?) = value?.let { append(key, value) }
 internal fun ParametersBuilder.parameter(key: String, value: Boolean?) = parameter(key, value?.toString())
 internal fun ParametersBuilder.parameter(key: String, value: Int?) = parameter(key, value?.toString())
+internal fun ParametersBuilder.parameter(key: String, value: Long?) = parameter(key, value?.toString())
 internal fun ParametersBuilder.parameter(key: String, value: Instant?) =
     parameter(key, value?.toEpochMilliseconds()?.toString())

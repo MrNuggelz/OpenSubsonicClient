@@ -27,3 +27,6 @@ class InternetRadioStationAPITest : StringSpec({
 class ChatAPITest : StringSpec({
     include(chatAPITestFactory)
 })
+class BookmarksAPITest : StringSpec({
+    include(bookmarkAPITestFactory)
+})

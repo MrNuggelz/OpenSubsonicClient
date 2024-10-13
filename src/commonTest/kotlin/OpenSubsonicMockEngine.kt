@@ -403,6 +403,26 @@ fun Url.handlePath() = when (pathSegments.last()) {
     "getChatMessages" -> handleParameters(parameters { append("since", "1678935707000") }, GetChatMessages)
     "addChatMessage" -> handleParameters(parameters { append("message", "hello world!") }, SubsonicResponse)
 
+    "getBookmarks" -> GetBookmarksResponse
+    "createBookmark" -> handleParameters(
+        parameters {
+            append("id", "123")
+            append("position", "7000")
+            append("comment", "playSub bookmark")
+        },
+        SubsonicResponse
+    )
+
+    "deleteBookmark" -> handleParameters(parameters { append("id", "123") }, SubsonicResponse)
+    "savePlayQueue" -> handleParameters(
+        parameters {
+            append("id", "123")
+            append("current", "123")
+            append("position", "7000")
+        },
+        SubsonicResponse
+    )
+
     "ping" -> SubsonicResponse
     "getLicense" -> GetLicenseResponse
     else -> genericError
