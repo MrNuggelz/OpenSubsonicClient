@@ -50,13 +50,13 @@ Playlists:
 - [x] deletePlaylist
 
 Media retrieval:
-- [ ] stream
-- [ ] download
+- [x] stream
+- [x] download
 - [ ] hls
 - [ ] getCaptions
-- [ ] getCoverArt
-- [ ] getLyrics
-- [ ] getAvatar
+- [x] getCoverArt
+- [x] getLyrics
+- [x] getAvatar
 
 Media annotation:
 - [x] star

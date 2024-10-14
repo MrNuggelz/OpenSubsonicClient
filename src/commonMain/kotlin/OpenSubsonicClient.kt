@@ -8,9 +8,13 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsChannel
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
 import io.ktor.http.ParametersBuilder
+import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.ByteReadChannel
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -47,6 +51,19 @@ public open class OpenSubsonicClient(
             }
         }
         install(ContentNegotiation) { json(json) }
+    }
+    internal suspend inline fun binaryOpenSubsonicRequest(
+        path: String,
+        crossinline additionalParameters: ParametersBuilder.() -> Unit = {},
+    ): Result<ByteReadChannel> = makeRequest(path, additionalParameters).mapCatching { resp ->
+        return when (resp.contentType()) {
+            ContentType.Application.Json ->
+                resp.body<JsonObject>()["subsonic-response"]?.jsonObject?.get("error")?.let {
+                    Result.failure(json.decodeFromJsonElement(OpenSubsonicError.serializer(), it))
+                } ?: error("field subsonic-response not found")
+
+            else -> Result.success(resp.bodyAsChannel())
+        }
     }
 
     internal suspend inline fun <reified T> openSubsonicRequest(
