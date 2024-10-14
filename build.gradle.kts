@@ -58,7 +58,7 @@ kotlin {
         jvmTest.dependencies {
             implementation(libs.slf4jSimple)
             implementation(libs.kotest.junit)
-            implementation("io.ktor:ktor-client-cio:2.3.12")
+            implementation("io.ktor:ktor-client-cio:3.0.0")
         }
     }
 }
