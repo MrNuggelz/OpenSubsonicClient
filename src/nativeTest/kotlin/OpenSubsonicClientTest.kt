@@ -33,3 +33,6 @@ class BookmarksAPITest : StringSpec({
 class MediaLibraryScanningAPITest : StringSpec({
     include(mediaLibraryScanningAPITestFactory)
 })
+class MediaRetrievalAPITest : StringSpec({
+    include(mediaRetrievalAPITestFactory)
+})
