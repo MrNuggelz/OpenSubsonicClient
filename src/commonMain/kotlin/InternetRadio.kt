@@ -2,6 +2,7 @@ package io.github.mrnuggelz.opensubsonic
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmInline
 
 public suspend fun OpenSubsonicClient.internetRadioStations(): Result<List<InternetRadioStation>> =
     openSubsonicRequest<InternetRadioStations>("getInternetRadioStations", "internetRadioStations").map { it.stations }
@@ -17,7 +18,7 @@ public suspend fun OpenSubsonicClient.createInternetRadioStation(
 }
 
 public suspend fun OpenSubsonicClient.updateInternetRadioStation(
-    id: String,
+    id: InternetRadioStationId,
     streamUrl: String,
     name: String,
     homepageUrl: String? = null,
@@ -28,8 +29,9 @@ public suspend fun OpenSubsonicClient.updateInternetRadioStation(
     parameter("homepageUrl", homepageUrl)
 }
 
-public suspend fun OpenSubsonicClient.deleteInternetRadioStation(id: String): Result<OpenSubsonicResponse> =
-    openSubsonicRequest("deleteInternetRadioStation") { parameter("id", id) }
+public suspend fun OpenSubsonicClient.deleteInternetRadioStation(
+    id: InternetRadioStationId
+): Result<OpenSubsonicResponse> = openSubsonicRequest("deleteInternetRadioStation") { parameter("id", id) }
 
 @Serializable
 private data class InternetRadioStations(
@@ -39,8 +41,12 @@ private data class InternetRadioStations(
 
 @Serializable
 public data class InternetRadioStation(
-    val id: String,
+    val id: InternetRadioStationId,
     val name: String,
     val streamUrl: String,
     val homePageUrl: String?,
 )
+
+@JvmInline
+@Serializable
+public value class InternetRadioStationId(public val value: String)

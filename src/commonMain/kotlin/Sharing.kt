@@ -4,12 +4,13 @@ import io.github.mrnuggelz.opensubsonic.responses.Song
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmInline
 
 public suspend fun OpenSubsonicClient.shares(): Result<List<Share>> =
     openSubsonicRequest<Shares>("getShares", "shares").map { it.shares }
 
 public suspend fun OpenSubsonicClient.createShare(
-    id: String,
+    id: SongAlbumId,
     description: String? = null,
     expires: Instant? = null,
 ): Result<List<Share>> = openSubsonicRequest<Shares>("createShare", "shares") {
@@ -19,7 +20,7 @@ public suspend fun OpenSubsonicClient.createShare(
 }.map { it.shares }
 
 public suspend fun OpenSubsonicClient.updateShare(
-    id: String,
+    id: ShareId,
     description: String? = null,
     expires: Instant? = null
 ): Result<OpenSubsonicResponse> = openSubsonicRequest("updateShare") {
@@ -28,7 +29,7 @@ public suspend fun OpenSubsonicClient.updateShare(
     parameter("expires", expires)
 }
 
-public suspend fun OpenSubsonicClient.deleteShare(id: String): Result<OpenSubsonicResponse> =
+public suspend fun OpenSubsonicClient.deleteShare(id: ShareId): Result<OpenSubsonicResponse> =
     openSubsonicRequest("deleteShare") { parameter("id", id) }
 
 @Serializable
@@ -39,7 +40,7 @@ public data class Shares(
 
 @Serializable
 public data class Share(
-    val id: String,
+    val id: ShareId,
     val url: String,
     val description: String? = null,
     val username: String,
@@ -50,3 +51,7 @@ public data class Share(
     @SerialName("entry")
     val songs: List<Song>,
 )
+
+@JvmInline
+@Serializable
+public value class ShareId(public val value: String)

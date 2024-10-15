@@ -2,8 +2,10 @@ package io.github.mrnuggelz.opensubsonic
 
 import io.github.mrnuggelz.opensubsonic.responses.AlbumID3
 import io.github.mrnuggelz.opensubsonic.responses.Song
+import io.github.mrnuggelz.opensubsonic.responses.SongId
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmInline
 import kotlin.time.Duration
 
 /**
@@ -17,7 +19,7 @@ import kotlin.time.Duration
  *
  */
 public suspend fun OpenSubsonicClient.stream(
-    id: String,
+    id: SongId,
     maxBitRate: Int? = null,
     format: String? = null,
     timeOffset: Duration? = null,
@@ -33,14 +35,14 @@ public suspend fun OpenSubsonicClient.stream(
  * Downloads a given media file. Similar to [stream], but this method returns the original media data without transcoding or downsampling.
  * @param id A string which uniquely identifies the file to stream. Obtained by calls to [Song.id].
  */
-public suspend fun OpenSubsonicClient.download(id: String): Result<ByteReadChannel> =
+public suspend fun OpenSubsonicClient.download(id: SongId): Result<ByteReadChannel> =
     binaryOpenSubsonicRequest("download") { parameter("id", id) }
 
 /**
  * Returns a cover art image.
  * @param id The coverArt ID. Returned by most entities likes [Song] or [AlbumID3]
  */
-public suspend fun OpenSubsonicClient.coverArt(id: String, size: Int? = null): Result<ByteReadChannel> =
+public suspend fun OpenSubsonicClient.coverArt(id: CoverArtId, size: Int? = null): Result<ByteReadChannel> =
     binaryOpenSubsonicRequest("getCoverArt") {
         parameter("id", id)
         parameter("size", size)
@@ -69,3 +71,7 @@ public data class Lyrics(
     val artist: String? = null,
     val title: String? = null,
 )
+
+@JvmInline
+@Serializable
+public value class CoverArtId(public val value: String)
