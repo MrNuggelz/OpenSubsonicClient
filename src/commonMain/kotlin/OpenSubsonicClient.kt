@@ -8,9 +8,13 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsChannel
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
 import io.ktor.http.ParametersBuilder
+import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.ByteReadChannel
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -47,6 +51,20 @@ public open class OpenSubsonicClient(
             }
         }
         install(ContentNegotiation) { json(json) }
+    }
+
+    internal suspend inline fun binaryOpenSubsonicRequest(
+        path: String,
+        crossinline additionalParameters: ParametersBuilder.() -> Unit = {},
+    ): Result<ByteReadChannel> = makeRequest(path, additionalParameters).mapCatching { resp ->
+        return when (resp.contentType()) {
+            ContentType.Application.Json ->
+                resp.body<JsonObject>()["subsonic-response"]?.jsonObject?.get("error")?.let {
+                    Result.failure(json.decodeFromJsonElement(OpenSubsonicError.serializer(), it))
+                } ?: error("field subsonic-response not found")
+
+            else -> Result.success(resp.bodyAsChannel())
+        }
     }
 
     internal suspend inline fun <reified T> openSubsonicRequest(
@@ -177,7 +195,17 @@ public abstract class OpenSubsonicError(override val message: String) : Throwabl
     }
 }
 
+public interface SongAlbumId : SongAlbumArtistId
+public interface SongAlbumArtistId {
+    public val value: String
+}
+
 internal fun ParametersBuilder.parameter(key: String, value: String?) = value?.let { append(key, value) }
+internal fun ParametersBuilder.parameter(key: String, value: SongAlbumArtistId?) = parameter(key, value?.value)
+internal fun ParametersBuilder.parameter(key: String, value: InternetRadioStationId) = append(key, value.value)
+internal fun ParametersBuilder.parameter(key: String, value: PlaylistId) = append(key, value.value)
+internal fun ParametersBuilder.parameter(key: String, value: ShareId) = append(key, value.value)
+internal fun ParametersBuilder.parameter(key: String, value: CoverArtId) = append(key, value.value)
 internal fun ParametersBuilder.parameter(key: String, value: Boolean?) = parameter(key, value?.toString())
 internal fun ParametersBuilder.parameter(key: String, value: Int?) = parameter(key, value?.toString())
 internal fun ParametersBuilder.parameter(key: String, value: Long?) = parameter(key, value?.toString())

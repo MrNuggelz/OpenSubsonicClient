@@ -5,7 +5,6 @@ import io.kotest.core.spec.style.scopes.StringSpecRootScope
 import io.kotest.matchers.result.shouldBeFailure
 import io.kotest.matchers.result.shouldBeSuccess
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldStartWith
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpHeaders
@@ -18,10 +17,29 @@ import io.ktor.util.filter
 import org.kotlincrypto.hash.md.MD5
 import responses.GetChatMessages
 
+val binaryEndpoints = listOf(
+    "stream",
+    "download",
+    "getCoverArt",
+    "getAvatar",
+)
+
 val OpenSubsonicMockEngine = MockEngine { request ->
-    val body: String = if (request.url.parameters.validateDefaultParameters()) {
-        request.url.toString().shouldStartWith("http://localhost/rest/")
-        request.url.handlePath()
+    val body = if (request.url.parameters.validateDefaultParameters()) {
+        if (!request.url.toString().startsWith("http://localhost/rest/")) {
+            notFoundErrorResponse
+        }
+        if (request.url.pathSegments.last() in binaryEndpoints) {
+            request.url.handleBinaryPath()?.let {
+                return@MockEngine respond(
+                    content = it,
+                    status = HttpStatusCode.OK,
+                )
+            }
+            notFoundErrorResponse
+        } else {
+            request.url.handlePath()
+        }
     } else {
         wrongCredentialResponse
     }
@@ -45,6 +63,13 @@ fun Url.handleParameters(expectedParameters: Parameters, response: String): Stri
         response
     } else {
         notFoundErrorResponse
+    }
+
+fun Url.handleParameters(expectedParameters: Parameters): ByteArray? =
+    if (parameters.filter { name, _ -> name !in listOf("u", "c", "f", "v", "s", "t") } == expectedParameters) {
+        "someData".encodeToByteArray()
+    } else {
+        null
     }
 
 fun Parameters.validateDefaultParameters() = filter { name, _ -> name in listOf("u", "c", "f", "v") } == parameters {
@@ -110,7 +135,7 @@ fun <T> StringSpecRootScope.expectResponse(
     methodCall: suspend OpenSubsonicClient.() -> Result<T>,
 ) {
     "$methodName should return $returnDescription" {
-        methodCall(client).shouldBeSuccess {
+        methodCall(client).onFailure { it.printStackTrace() }.shouldBeSuccess {
             it shouldBe expected
         }
     }
@@ -137,6 +162,35 @@ val expectedOpenSubsonicResponse = OpenSubsonicResponse(
     status = StatusResponse.OK,
     version = "1.16.1"
 )
+
+@Suppress("LongMethod", "CyclomaticComplexMethod")
+fun Url.handleBinaryPath(): ByteArray? = when (pathSegments.last()) {
+    "stream" -> handleParameters(
+        parameters {
+            append("id", "songId")
+            append("maxBitRate", "0")
+            append("format", "mp3")
+            append("timeOffset", "2")
+        }
+    )
+
+    "download" -> handleParameters(
+        parameters {
+            append("id", "songId")
+        }
+    )
+    "getCoverArt" -> handleParameters(
+        parameters {
+            append("id", "coverArtId")
+        }
+    )
+    "getAvatar" -> handleParameters(
+        parameters {
+            append("username", "guest")
+        }
+    )
+    else -> genericError.encodeToByteArray()
+}
 
 @Suppress("LongMethod", "CyclomaticComplexMethod")
 fun Url.handlePath() = when (pathSegments.last()) {
@@ -329,7 +383,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
 
     "getShares" -> GetSharesResponse
     "createShare" -> handleParameters(
-        parameters { append("id", "shareId") },
+        parameters { append("id", "songId") },
         GetSharesResponse
     )
 
@@ -422,8 +476,16 @@ fun Url.handlePath() = when (pathSegments.last()) {
         },
         SubsonicResponse
     )
+
     "getScanStatus" -> GetScanStatusResponse
     "startScan" -> GetScanStatusResponse
+    "getLyrics" -> handleParameters(
+        parameters {
+            append("artist", "Metallica")
+            append("title", "Blitzkrieg")
+        },
+        GetLyricResponse
+    )
 
     "ping" -> SubsonicResponse
     "getLicense" -> GetLicenseResponse

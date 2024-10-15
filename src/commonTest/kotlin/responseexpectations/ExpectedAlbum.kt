@@ -1,13 +1,16 @@
 package responseexpectations
 
+import io.github.mrnuggelz.opensubsonic.CoverArtId
 import io.github.mrnuggelz.opensubsonic.responses.Album
+import io.github.mrnuggelz.opensubsonic.responses.AlbumId
+import io.github.mrnuggelz.opensubsonic.responses.ArtistId
 
 internal val expectedAlbum = Album(
-    id = "200000021",
+    id = AlbumId("200000021"),
     name = "Forget and Remember",
     artist = "Comfort Fit",
-    artistId = "100000036",
-    coverArt = "al-200000021",
+    artistId = ArtistId("100000036"),
+    coverArt = CoverArtId("al-200000021"),
     songCount = 20,
     duration = 4248,
     playCount = 0,

@@ -1,19 +1,20 @@
 package io.github.mrnuggelz.opensubsonic.responses
 
+import io.github.mrnuggelz.opensubsonic.CoverArtId
+import io.github.mrnuggelz.opensubsonic.SongAlbumId
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmInline
 
 @Serializable
 public data class Song(
-    val id: String,
-    val parent: String? = null,
-    val isDir: Boolean,
+    val id: SongId,
     val title: String,
     val album: String? = null,
     val artist: String? = null,
     val track: Int? = null,
     val year: Int? = null,
     val genre: String? = null,
-    val coverArt: String? = null,
+    val coverArt: CoverArtId? = null,
     val size: Int? = null,
     val contentType: String? = null,
     val suffix: String? = null,
@@ -25,20 +26,17 @@ public data class Song(
     val samplingRate: Int? = null,
     val channelCount: Int? = null,
     val path: String? = null,
-    val isVideo: Boolean? = null,
     val userRating: Int? = null,
     val averageRating: Float? = null,
     val playCount: Long? = null,
     val discNumber: Int? = null,
     val created: String? = null,
     val starred: String? = null,
-    val albumId: String? = null,
-    val artistId: String? = null,
+    val albumId: AlbumId? = null,
+    val artistId: ArtistId? = null,
     val type: String? = null,
     val mediaType: String? = null,
     val bookmarkPosition: Long? = null,
-    val originalWidth: Int? = null,
-    val originalHeight: Int? = null,
     val played: String? = null,
     val bpm: Int? = null,
     val comment: String? = null,
@@ -71,3 +69,7 @@ public data class ReplayGain(
     val baseGain: Float? = null,
     val fallbackGain: Float? = null,
 )
+
+@JvmInline
+@Serializable
+public value class SongId(public override val value: String) : SongAlbumId

@@ -2,6 +2,7 @@ import io.github.mrnuggelz.opensubsonic.Bookmark
 import io.github.mrnuggelz.opensubsonic.bookmarks
 import io.github.mrnuggelz.opensubsonic.createBookmark
 import io.github.mrnuggelz.opensubsonic.deleteBookmark
+import io.github.mrnuggelz.opensubsonic.responses.SongId
 import io.github.mrnuggelz.opensubsonic.savePlayQueue
 import io.kotest.core.spec.style.stringSpec
 import kotlinx.datetime.Instant
@@ -32,12 +33,12 @@ val bookmarkAPITestFactory = stringSpec {
         )
     ) { bookmarks() }
     expectResponse("createBookmark", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
-        createBookmark("123", 7000, "playSub bookmark")
+        createBookmark(SongId("123"), 7000, "playSub bookmark")
     }
     expectResponse("deleteBookmark", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
-        deleteBookmark("123")
+        deleteBookmark(SongId("123"))
     }
     expectResponse("savePlayQueue", "OpensubsonicResponse", expectedOpenSubsonicResponse) {
-        savePlayQueue("123", "123", 7000)
+        savePlayQueue(SongId("123"), "123", 7000)
     }
 }
