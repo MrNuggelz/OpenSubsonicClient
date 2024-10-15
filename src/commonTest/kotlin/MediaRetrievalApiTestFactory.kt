@@ -6,7 +6,7 @@ import io.github.mrnuggelz.opensubsonic.download
 import io.github.mrnuggelz.opensubsonic.lyrics
 import io.github.mrnuggelz.opensubsonic.stream
 import io.kotest.core.spec.style.stringSpec
-import io.ktor.util.toByteArray
+import io.ktor.utils.io.toByteArray
 import kotlin.time.Duration.Companion.seconds
 
 val mediaRetrievalAPITestFactory = stringSpec {
