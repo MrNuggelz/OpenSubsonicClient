@@ -1,6 +1,7 @@
 package io.github.mrnuggelz.opensubsonic
 
 import io.github.mrnuggelz.opensubsonic.responses.Song
+import io.github.mrnuggelz.opensubsonic.responses.SongId
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -9,7 +10,7 @@ public suspend fun OpenSubsonicClient.bookmarks(): Result<List<Bookmark>> =
     openSubsonicRequest<Bookmarks>("getBookmarks", "bookmarks").map { it.bookmarks }
 
 public suspend fun OpenSubsonicClient.createBookmark(
-    id: String,
+    id: SongId,
     position: Long,
     comment: String? = null,
 ): Result<OpenSubsonicResponse> = openSubsonicRequest("createBookmark") {
@@ -18,11 +19,11 @@ public suspend fun OpenSubsonicClient.createBookmark(
     parameter("comment", comment)
 }
 
-public suspend fun OpenSubsonicClient.deleteBookmark(id: String): Result<OpenSubsonicResponse> =
+public suspend fun OpenSubsonicClient.deleteBookmark(id: SongId): Result<OpenSubsonicResponse> =
     openSubsonicRequest("deleteBookmark") { parameter("id", id) }
 
 public suspend fun OpenSubsonicClient.savePlayQueue(
-    id: String,
+    id: SongId,
     current: String? = null,
     position: Long? = null,
 ): Result<OpenSubsonicResponse> = openSubsonicRequest("savePlayQueue") {

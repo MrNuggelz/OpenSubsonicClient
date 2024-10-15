@@ -1,11 +1,12 @@
 package responseexpectations
 
 import io.github.mrnuggelz.opensubsonic.Share
+import io.github.mrnuggelz.opensubsonic.ShareId
 import kotlinx.datetime.Instant
 
 val expectedShares = listOf(
     Share(
-        id = "12",
+        id = ShareId("12"),
         url = "http://localhost:8989/share.php?id=12&secret=fXlKyEv3",
         description = "Forget and Remember (Comfort Fit)",
         username = "user",

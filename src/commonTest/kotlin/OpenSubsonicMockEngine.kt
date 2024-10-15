@@ -383,7 +383,7 @@ fun Url.handlePath() = when (pathSegments.last()) {
 
     "getShares" -> GetSharesResponse
     "createShare" -> handleParameters(
-        parameters { append("id", "shareId") },
+        parameters { append("id", "songId") },
         GetSharesResponse
     )
 

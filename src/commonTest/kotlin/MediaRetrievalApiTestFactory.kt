@@ -1,9 +1,11 @@
+import io.github.mrnuggelz.opensubsonic.CoverArtId
 import io.github.mrnuggelz.opensubsonic.Lyrics
 import io.github.mrnuggelz.opensubsonic.OpenSubsonicError
 import io.github.mrnuggelz.opensubsonic.avatar
 import io.github.mrnuggelz.opensubsonic.coverArt
 import io.github.mrnuggelz.opensubsonic.download
 import io.github.mrnuggelz.opensubsonic.lyrics
+import io.github.mrnuggelz.opensubsonic.responses.SongId
 import io.github.mrnuggelz.opensubsonic.stream
 import io.kotest.core.spec.style.stringSpec
 import io.ktor.util.toByteArray
@@ -14,10 +16,10 @@ val mediaRetrievalAPITestFactory = stringSpec {
         "stream",
         "error if song is not found",
         OpenSubsonicError.NotFound("The request data was not found")
-    ) { stream("notExisting") }
+    ) { stream(SongId("notExisting")) }
     expectResponse("stream", "existing shares", "someData".encodeToByteArray()) {
         stream(
-            "songId",
+            SongId("songId"),
             maxBitRate = 0,
             format = "mp3",
             timeOffset = 2.seconds,
@@ -27,12 +29,12 @@ val mediaRetrievalAPITestFactory = stringSpec {
         "download",
         "existing shares",
         "someData".encodeToByteArray()
-    ) { download("songId").map { it.toByteArray() } }
+    ) { download(SongId("songId")).map { it.toByteArray() } }
     expectResponse(
         "getCoverArt",
         "existing shares",
         "someData".encodeToByteArray()
-    ) { coverArt("coverArtId").map { it.toByteArray() } }
+    ) { coverArt(CoverArtId("coverArtId")).map { it.toByteArray() } }
     expectResponse(
         "getLyrics",
         "existing shares",

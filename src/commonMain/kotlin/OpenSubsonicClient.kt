@@ -52,6 +52,7 @@ public open class OpenSubsonicClient(
         }
         install(ContentNegotiation) { json(json) }
     }
+
     internal suspend inline fun binaryOpenSubsonicRequest(
         path: String,
         crossinline additionalParameters: ParametersBuilder.() -> Unit = {},
@@ -194,7 +195,17 @@ public abstract class OpenSubsonicError(override val message: String) : Throwabl
     }
 }
 
+public interface SongAlbumId : SongAlbumArtistId
+public interface SongAlbumArtistId {
+    public val value: String
+}
+
 internal fun ParametersBuilder.parameter(key: String, value: String?) = value?.let { append(key, value) }
+internal fun ParametersBuilder.parameter(key: String, value: SongAlbumArtistId?) = parameter(key, value?.value)
+internal fun ParametersBuilder.parameter(key: String, value: InternetRadioStationId) = append(key, value.value)
+internal fun ParametersBuilder.parameter(key: String, value: PlaylistId) = append(key, value.value)
+internal fun ParametersBuilder.parameter(key: String, value: ShareId) = append(key, value.value)
+internal fun ParametersBuilder.parameter(key: String, value: CoverArtId) = append(key, value.value)
 internal fun ParametersBuilder.parameter(key: String, value: Boolean?) = parameter(key, value?.toString())
 internal fun ParametersBuilder.parameter(key: String, value: Int?) = parameter(key, value?.toString())
 internal fun ParametersBuilder.parameter(key: String, value: Long?) = parameter(key, value?.toString())

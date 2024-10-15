@@ -1,37 +1,39 @@
 package io.github.mrnuggelz.opensubsonic
 
 import io.github.mrnuggelz.opensubsonic.responses.PlaylistWithSongs
+import io.github.mrnuggelz.opensubsonic.responses.SongId
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmInline
 
 public suspend fun OpenSubsonicClient.playlists(username: String? = null): Result<List<Playlist>> =
     openSubsonicRequest<Playlists>("getPlaylists", "playlists") { parameter("username", username) }.map { it.playlists }
 
-public suspend fun OpenSubsonicClient.playlist(id: String): Result<PlaylistWithSongs> =
-    openSubsonicRequest("getPlaylist", "playlist") { append("id", id) }
+public suspend fun OpenSubsonicClient.playlist(id: PlaylistId): Result<PlaylistWithSongs> =
+    openSubsonicRequest("getPlaylist", "playlist") { parameter("id", id) }
 
 public suspend fun OpenSubsonicClient.createPlaylist(
     name: String,
-    songIds: Iterable<String>
+    songIds: Iterable<SongId>
 ): Result<PlaylistWithSongs> =
     openSubsonicRequest("createPlaylist", "playlist") {
         append("name", name)
-        appendAll("songId", songIds)
+        appendAll("songId", songIds.map { it.value })
     }
 
 public suspend fun OpenSubsonicClient.updatePlaylist(
-    playlistId: String,
+    playlistId: PlaylistId,
     playlistName: String? = null,
     comment: String? = null,
     public: Boolean? = null,
-    songIdToAdd: String? = null,
+    songIdToAdd: SongId? = null,
     songIndexToRemove: Int? = null,
 ): Result<OpenSubsonicResponse> =
     openSubsonicRequest(
         "updatePlaylist"
     ) {
-        append("playlistId", playlistId)
+        parameter("playlistId", playlistId)
         append("public", public.toString())
         append("songIndexToRemove", songIndexToRemove.toString())
         parameter("playlistName", playlistName)
@@ -39,8 +41,8 @@ public suspend fun OpenSubsonicClient.updatePlaylist(
         parameter("songIdToAdd", songIdToAdd)
     }
 
-public suspend fun OpenSubsonicClient.deletePlaylist(id: String): Result<OpenSubsonicResponse> =
-    openSubsonicRequest("deletePlaylist") { append("id", id) }
+public suspend fun OpenSubsonicClient.deletePlaylist(id: PlaylistId): Result<OpenSubsonicResponse> =
+    openSubsonicRequest("deletePlaylist") { parameter("id", id) }
 
 @Serializable
 private data class Playlists(
@@ -50,7 +52,7 @@ private data class Playlists(
 
 @Serializable
 public data class Playlist(
-    val id: String,
+    val id: PlaylistId,
     val name: String,
     val comment: String? = null,
     val owner: String? = null,
@@ -59,6 +61,10 @@ public data class Playlist(
     val duration: Int,
     val created: Instant,
     val changed: Instant,
-    val coverArt: String? = null,
+    val coverArt: CoverArtId? = null,
     val allowedUser: List<String> = emptyList(),
 )
+
+@JvmInline
+@Serializable
+public value class PlaylistId(public val value: String)

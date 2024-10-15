@@ -1,8 +1,11 @@
 package io.github.mrnuggelz.opensubsonic.responses
 
+import io.github.mrnuggelz.opensubsonic.CoverArtId
+import io.github.mrnuggelz.opensubsonic.SongAlbumId
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmInline
 
 @Serializable
 public data class AlbumList(
@@ -16,15 +19,15 @@ public data class AlbumList2(
 
 @Serializable
 public data class AlbumID3(
-    val id: String = "",
-    val name: String = "",
+    val id: AlbumId,
+    val name: String,
     val artist: String? = null,
-    val artistId: String? = null,
-    val coverArt: String? = null,
-    val songCount: Int = 0,
-    val duration: Int = 0,
+    val artistId: ArtistId? = null,
+    val coverArt: CoverArtId? = null,
+    val songCount: Int,
+    val duration: Int,
     val playCount: Long? = 0L,
-    val created: Instant? = null,
+    val created: Instant,
     val starred: Instant? = null,
     val year: Int? = 0,
     val genre: String? = null
@@ -32,11 +35,11 @@ public data class AlbumID3(
 
 @Serializable
 public data class Album(
-    val id: String,
+    val id: AlbumId,
     val name: String,
     val artist: String? = null,
-    val artistId: String? = null,
-    val coverArt: String? = null,
+    val artistId: ArtistId? = null,
+    val coverArt: CoverArtId? = null,
     val songCount: Int,
     val duration: Int,
     val playCount: Long? = null,
@@ -77,3 +80,7 @@ public data class DiscTitle(
 
 @Serializable
 public data class RecordLabel(val name: String)
+
+@JvmInline
+@Serializable
+public value class AlbumId(public override val value: String) : SongAlbumId

@@ -1,13 +1,18 @@
 package responseexpectations
 
+import io.github.mrnuggelz.opensubsonic.CoverArtId
 import io.github.mrnuggelz.opensubsonic.Playlist
+import io.github.mrnuggelz.opensubsonic.PlaylistId
+import io.github.mrnuggelz.opensubsonic.responses.AlbumId
+import io.github.mrnuggelz.opensubsonic.responses.ArtistId
 import io.github.mrnuggelz.opensubsonic.responses.PlaylistWithSongs
 import io.github.mrnuggelz.opensubsonic.responses.Song
+import io.github.mrnuggelz.opensubsonic.responses.SongId
 import kotlinx.datetime.Instant
 
 val expectedPlaylists = listOf(
     Playlist(
-        id = "800000003",
+        id = PlaylistId("800000003"),
         name = "random - admin - private (admin)",
         owner = "admin",
         public = false,
@@ -17,7 +22,7 @@ val expectedPlaylists = listOf(
         duration = 17875
     ),
     Playlist(
-        id = "800000002",
+        id = PlaylistId("800000002"),
         name = "random - admin - public (admin)",
         owner = "admin",
         public = true,
@@ -30,7 +35,7 @@ val expectedPlaylists = listOf(
 
 val expectedPlaylist = PlaylistWithSongs(
     Playlist(
-        id = "800000075",
+        id = PlaylistId("800000075"),
         name = "testcreate",
         owner = "user",
         public = true,
@@ -41,17 +46,14 @@ val expectedPlaylist = PlaylistWithSongs(
     ),
     listOf(
         Song(
-            id = "300000060",
-            parent = "200000002",
+            id = SongId("300000060"),
             title = "BrownSmoke",
-            isDir = false,
-            isVideo = false,
             type = "music",
-            albumId = "200000002",
+            albumId = AlbumId("200000002"),
             album = "Colorsmoke EP",
-            artistId = "100000002",
+            artistId = ArtistId("100000002"),
             artist = "Synthetic",
-            coverArt = "300000060",
+            coverArt = CoverArtId("300000060"),
             duration = 304,
             bitRate = 20,
             bitDepth = 16,

@@ -1,6 +1,5 @@
 import io.github.mrnuggelz.opensubsonic.ListType
 import io.github.mrnuggelz.opensubsonic.albumList
-import io.github.mrnuggelz.opensubsonic.albumList2
 import io.github.mrnuggelz.opensubsonic.getStarred
 import io.github.mrnuggelz.opensubsonic.getStarred2
 import io.github.mrnuggelz.opensubsonic.nowPlaying
@@ -18,18 +17,12 @@ val albumSongListsAPITestFactory = stringSpec {
     ) { it shouldHaveSize 2 }
 
     responseShouldBe(
-        "albumList2",
-        "album list",
-        methodCall = { albumList2(ListType.random) }
-    ) { it shouldHaveSize 2 }
-
-    responseShouldBe(
         "randomSongs",
         "album list",
         methodCall = { randomSongs(1) }
     ) { resp ->
         resp.songs.map {
-            it.id
+            it.id.value
         } shouldContainExactly listOf("300000060", "300000055")
     }
 
