@@ -1,8 +1,8 @@
 package responseexpectations
 
-import io.github.mrnuggelz.opensubsonic.CoverArtId
-import io.github.mrnuggelz.opensubsonic.Playlist
-import io.github.mrnuggelz.opensubsonic.PlaylistId
+import io.github.mrnuggelz.opensubsonic.requests.CoverArtId
+import io.github.mrnuggelz.opensubsonic.requests.Playlist
+import io.github.mrnuggelz.opensubsonic.requests.PlaylistId
 import io.github.mrnuggelz.opensubsonic.responses.AlbumId
 import io.github.mrnuggelz.opensubsonic.responses.ArtistId
 import io.github.mrnuggelz.opensubsonic.responses.PlaylistWithSongs

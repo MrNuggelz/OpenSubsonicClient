@@ -1,5 +1,8 @@
-package io.github.mrnuggelz.opensubsonic
+package io.github.mrnuggelz.opensubsonic.requests
 
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
+import io.github.mrnuggelz.opensubsonic.parameter
+import io.github.mrnuggelz.opensubsonic.responses.OpenSubsonicResponse
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline
@@ -7,6 +10,9 @@ import kotlin.jvm.JvmInline
 public suspend fun OpenSubsonicClient.internetRadioStations(): Result<List<InternetRadioStation>> =
     openSubsonicRequest<InternetRadioStations>("getInternetRadioStations", "internetRadioStations").map { it.stations }
 
+/**
+ * Adds a new internet radio station. **Only users with admin privileges are allowed to call this method**.
+ */
 public suspend fun OpenSubsonicClient.createInternetRadioStation(
     streamUrl: String,
     name: String,
@@ -17,6 +23,9 @@ public suspend fun OpenSubsonicClient.createInternetRadioStation(
     parameter("homepageUrl", homepageUrl)
 }
 
+/**
+ * Updates an existing internet radio station. **Only users with admin privileges are allowed to call this method**.
+ */
 public suspend fun OpenSubsonicClient.updateInternetRadioStation(
     id: InternetRadioStationId,
     streamUrl: String,
@@ -29,6 +38,9 @@ public suspend fun OpenSubsonicClient.updateInternetRadioStation(
     parameter("homepageUrl", homepageUrl)
 }
 
+/**
+ * Deletes an existing internet radio station. **Only users with admin privileges are allowed to call this method**.
+ */
 public suspend fun OpenSubsonicClient.deleteInternetRadioStation(
     id: InternetRadioStationId
 ): Result<OpenSubsonicResponse> = openSubsonicRequest("deleteInternetRadioStation") { parameter("id", id) }

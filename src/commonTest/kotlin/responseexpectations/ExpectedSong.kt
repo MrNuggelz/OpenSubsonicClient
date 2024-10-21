@@ -1,6 +1,6 @@
 package responseexpectations
 
-import io.github.mrnuggelz.opensubsonic.CoverArtId
+import io.github.mrnuggelz.opensubsonic.requests.CoverArtId
 import io.github.mrnuggelz.opensubsonic.responses.AlbumId
 import io.github.mrnuggelz.opensubsonic.responses.ArtistId
 import io.github.mrnuggelz.opensubsonic.responses.ItemGenre

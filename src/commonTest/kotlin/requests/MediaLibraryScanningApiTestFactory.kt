@@ -1,6 +1,5 @@
-import io.github.mrnuggelz.opensubsonic.ScanStatus
-import io.github.mrnuggelz.opensubsonic.scanStatus
-import io.github.mrnuggelz.opensubsonic.startScan
+package io.github.mrnuggelz.opensubsonic.requests
+
 import io.kotest.core.spec.style.stringSpec
 
 val mediaLibraryScanningAPITestFactory = stringSpec {

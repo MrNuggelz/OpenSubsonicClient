@@ -1,12 +1,5 @@
-import io.github.mrnuggelz.opensubsonic.CoverArtId
-import io.github.mrnuggelz.opensubsonic.album
-import io.github.mrnuggelz.opensubsonic.albumInfo
-import io.github.mrnuggelz.opensubsonic.albumInfo2
-import io.github.mrnuggelz.opensubsonic.artist
-import io.github.mrnuggelz.opensubsonic.artistInfo
-import io.github.mrnuggelz.opensubsonic.artistInfo2
-import io.github.mrnuggelz.opensubsonic.artists
-import io.github.mrnuggelz.opensubsonic.genres
+package io.github.mrnuggelz.opensubsonic.requests
+
 import io.github.mrnuggelz.opensubsonic.responses.AlbumId
 import io.github.mrnuggelz.opensubsonic.responses.ArtistID3
 import io.github.mrnuggelz.opensubsonic.responses.ArtistId
@@ -14,10 +7,6 @@ import io.github.mrnuggelz.opensubsonic.responses.ArtistIndexID3
 import io.github.mrnuggelz.opensubsonic.responses.Artists
 import io.github.mrnuggelz.opensubsonic.responses.Genre
 import io.github.mrnuggelz.opensubsonic.responses.SongId
-import io.github.mrnuggelz.opensubsonic.similarSongs
-import io.github.mrnuggelz.opensubsonic.similarSongs2
-import io.github.mrnuggelz.opensubsonic.song
-import io.github.mrnuggelz.opensubsonic.topSongs
 import io.kotest.core.spec.style.stringSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe

@@ -1,10 +1,38 @@
-import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
-import io.github.mrnuggelz.opensubsonic.OpenSubsonicResponse
-import io.github.mrnuggelz.opensubsonic.StatusResponse
-import io.kotest.core.spec.style.scopes.StringSpecRootScope
-import io.kotest.matchers.result.shouldBeFailure
-import io.kotest.matchers.result.shouldBeSuccess
-import io.kotest.matchers.shouldBe
+package io.github.mrnuggelz.opensubsonic
+
+import io.github.mrnuggelz.opensubsonic.responses.GetAlbumInfo2Response
+import io.github.mrnuggelz.opensubsonic.responses.GetAlbumInfoResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetAlbumList2Response
+import io.github.mrnuggelz.opensubsonic.responses.GetAlbumListResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetAlbumResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetArtistInfo2Response
+import io.github.mrnuggelz.opensubsonic.responses.GetArtistInfoResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetArtistResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetArtistsResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetBookmarksResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetChatMessages
+import io.github.mrnuggelz.opensubsonic.responses.GetGenresResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetIndexesResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetInternetRadioStations
+import io.github.mrnuggelz.opensubsonic.responses.GetLicenseResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetLyricResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetMusicDirectoryResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetMusicFoldersResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetNowPlayingResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetPlaylistResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetPlaylistsResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetRandomSongsResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetScanStatusResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetSharesResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetSimilarSongs2Response
+import io.github.mrnuggelz.opensubsonic.responses.GetSimilarSongsResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetSongResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetSongsByGenreResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetStarred2Response
+import io.github.mrnuggelz.opensubsonic.responses.GetStarredResponse
+import io.github.mrnuggelz.opensubsonic.responses.GetTopSongsResponse
+import io.github.mrnuggelz.opensubsonic.responses.Search2Response
+import io.github.mrnuggelz.opensubsonic.responses.Search3Response
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpHeaders
@@ -15,7 +43,6 @@ import io.ktor.http.headersOf
 import io.ktor.http.parameters
 import io.ktor.util.filter
 import org.kotlincrypto.hash.md.MD5
-import responses.GetChatMessages
 
 val binaryEndpoints = listOf(
     "stream",
@@ -29,7 +56,7 @@ val OpenSubsonicMockEngine = MockEngine { request ->
         if (!request.url.toString().startsWith("http://localhost/rest/")) {
             notFoundErrorResponse
         }
-        if (request.url.pathSegments.last() in binaryEndpoints) {
+        if (request.url.segments.last() in binaryEndpoints) {
             request.url.handleBinaryPath()?.let {
                 return@MockEngine respond(
                     content = it,
@@ -115,56 +142,8 @@ const val SubsonicResponse = """
 }
 """
 
-fun <T> StringSpecRootScope.responseShouldBe(
-    methodName: String,
-    returnDescription: String,
-    client: OpenSubsonicClient = mockClient,
-    methodCall: suspend OpenSubsonicClient.() -> Result<T>,
-    block: (T) -> Unit,
-) {
-    "$methodName should return $returnDescription" {
-        methodCall(client).shouldBeSuccess(block)
-    }
-}
-
-fun <T> StringSpecRootScope.expectResponse(
-    methodName: String,
-    returnDescription: String,
-    expected: T,
-    client: OpenSubsonicClient = mockClient,
-    methodCall: suspend OpenSubsonicClient.() -> Result<T>,
-) {
-    "$methodName should return $returnDescription" {
-        methodCall(client).onFailure { it.printStackTrace() }.shouldBeSuccess {
-            it shouldBe expected
-        }
-    }
-}
-
-fun <T> StringSpecRootScope.expectResponse(
-    methodName: String,
-    returnDescription: String,
-    expected: Throwable,
-    client: OpenSubsonicClient = mockClient,
-    methodCall: suspend OpenSubsonicClient.() -> Result<T>,
-) {
-    "$methodName should return $returnDescription" {
-        methodCall(client).shouldBeFailure {
-            it shouldBe expected
-        }
-    }
-}
-
-val expectedOpenSubsonicResponse = OpenSubsonicResponse(
-    type = "AwesomeServerName",
-    serverVersion = "0.1.3 (tag)",
-    openSubsonic = true,
-    status = StatusResponse.OK,
-    version = "1.16.1"
-)
-
 @Suppress("LongMethod", "CyclomaticComplexMethod")
-fun Url.handleBinaryPath(): ByteArray? = when (pathSegments.last()) {
+fun Url.handleBinaryPath(): ByteArray? = when (segments.last()) {
     "stream" -> handleParameters(
         parameters {
             append("id", "songId")
@@ -193,7 +172,7 @@ fun Url.handleBinaryPath(): ByteArray? = when (pathSegments.last()) {
 }
 
 @Suppress("LongMethod", "CyclomaticComplexMethod")
-fun Url.handlePath() = when (pathSegments.last()) {
+fun Url.handlePath() = when (segments.last()) {
     "getAlbumList" -> handleParameters(
         parameters {
             append("type", "random")

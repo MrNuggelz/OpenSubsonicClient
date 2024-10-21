@@ -1,3 +1,6 @@
+@file:Suppress("NoWildcardImports", "WildcardImport")
+
+import io.github.mrnuggelz.opensubsonic.requests.*
 import io.kotest.core.spec.style.StringSpec
 
 class AlbumSongListAPITest : StringSpec({

@@ -1,10 +1,6 @@
-import io.github.mrnuggelz.opensubsonic.PlaylistId
-import io.github.mrnuggelz.opensubsonic.createPlaylist
-import io.github.mrnuggelz.opensubsonic.deletePlaylist
-import io.github.mrnuggelz.opensubsonic.playlist
-import io.github.mrnuggelz.opensubsonic.playlists
+package io.github.mrnuggelz.opensubsonic.requests
+
 import io.github.mrnuggelz.opensubsonic.responses.SongId
-import io.github.mrnuggelz.opensubsonic.updatePlaylist
 import io.kotest.core.spec.style.stringSpec
 import responseexpectations.expectedPlaylist
 import responseexpectations.expectedPlaylists

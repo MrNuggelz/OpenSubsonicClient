@@ -1,10 +1,17 @@
-package io.github.mrnuggelz.opensubsonic
+package io.github.mrnuggelz.opensubsonic.requests
 
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
+import io.github.mrnuggelz.opensubsonic.parameter
 import io.github.mrnuggelz.opensubsonic.responses.InstantAsMillisecondsSerializer
+import io.github.mrnuggelz.opensubsonic.responses.OpenSubsonicResponse
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Returns the current visible (non-expired) chat messages.
+ * @param since Only return messages newer than this
+ */
 public suspend fun OpenSubsonicClient.chatMessages(since: Instant? = null): Result<List<ChatMessage>> =
     openSubsonicRequest<ChatMessages>(
         "getChatMessages",

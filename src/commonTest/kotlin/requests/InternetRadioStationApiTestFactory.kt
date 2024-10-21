@@ -1,9 +1,5 @@
-import io.github.mrnuggelz.opensubsonic.InternetRadioStation
-import io.github.mrnuggelz.opensubsonic.InternetRadioStationId
-import io.github.mrnuggelz.opensubsonic.createInternetRadioStation
-import io.github.mrnuggelz.opensubsonic.deleteInternetRadioStation
-import io.github.mrnuggelz.opensubsonic.internetRadioStations
-import io.github.mrnuggelz.opensubsonic.updateInternetRadioStation
+package io.github.mrnuggelz.opensubsonic.requests
+
 import io.kotest.core.spec.style.stringSpec
 
 val internetRadioStationAPITestFactory = stringSpec {

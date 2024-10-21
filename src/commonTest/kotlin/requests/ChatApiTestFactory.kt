@@ -1,6 +1,5 @@
-import io.github.mrnuggelz.opensubsonic.ChatMessage
-import io.github.mrnuggelz.opensubsonic.addChatMessage
-import io.github.mrnuggelz.opensubsonic.chatMessages
+package io.github.mrnuggelz.opensubsonic.requests
+
 import io.kotest.core.spec.style.stringSpec
 import kotlinx.datetime.Instant
 

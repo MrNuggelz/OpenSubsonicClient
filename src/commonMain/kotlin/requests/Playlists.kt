@@ -1,5 +1,8 @@
-package io.github.mrnuggelz.opensubsonic
+package io.github.mrnuggelz.opensubsonic.requests
 
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
+import io.github.mrnuggelz.opensubsonic.parameter
+import io.github.mrnuggelz.opensubsonic.responses.OpenSubsonicResponse
 import io.github.mrnuggelz.opensubsonic.responses.PlaylistWithSongs
 import io.github.mrnuggelz.opensubsonic.responses.SongId
 import kotlinx.datetime.Instant
@@ -7,6 +10,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline
 
+/**
+ * Returns all playlists a user is allowed to play.
+ * @param username If specified, return playlists for this user rather than for the authenticated user. The authenticated user must have admin role if this parameter is used.
+ */
 public suspend fun OpenSubsonicClient.playlists(username: String? = null): Result<List<Playlist>> =
     openSubsonicRequest<Playlists>("getPlaylists", "playlists") { parameter("username", username) }.map { it.playlists }
 
@@ -22,6 +29,9 @@ public suspend fun OpenSubsonicClient.createPlaylist(
         appendAll("songId", songIds.map { it.value })
     }
 
+/**
+ * Only the owner of a playlist is allowed to update a playlist.
+ */
 public suspend fun OpenSubsonicClient.updatePlaylist(
     playlistId: PlaylistId,
     playlistName: String? = null,

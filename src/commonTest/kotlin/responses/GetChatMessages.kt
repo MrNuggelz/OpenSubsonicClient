@@ -1,4 +1,4 @@
-package responses
+package io.github.mrnuggelz.opensubsonic.responses
 
 const val GetChatMessages = """
 {
