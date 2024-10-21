@@ -1,11 +1,18 @@
-package io.github.mrnuggelz.opensubsonic
+package io.github.mrnuggelz.opensubsonic.requests
 
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
+import io.github.mrnuggelz.opensubsonic.parameter
+import io.github.mrnuggelz.opensubsonic.responses.OpenSubsonicResponse
 import io.github.mrnuggelz.opensubsonic.responses.Song
+import io.github.mrnuggelz.opensubsonic.responses.SongAlbumId
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline
 
+/**
+ * Returns information about shared media this user is allowed to manage.
+ */
 public suspend fun OpenSubsonicClient.shares(): Result<List<Share>> =
     openSubsonicRequest<Shares>("getShares", "shares").map { it.shares }
 

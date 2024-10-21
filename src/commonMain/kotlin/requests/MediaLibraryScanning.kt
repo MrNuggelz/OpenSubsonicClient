@@ -1,5 +1,6 @@
-package io.github.mrnuggelz.opensubsonic
+package io.github.mrnuggelz.opensubsonic.requests
 
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
 import kotlinx.serialization.Serializable
 
 public suspend fun OpenSubsonicClient.scanStatus(): Result<ScanStatus> =

@@ -1,5 +1,7 @@
-package io.github.mrnuggelz.opensubsonic
+package io.github.mrnuggelz.opensubsonic.requests
 
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
+import io.github.mrnuggelz.opensubsonic.parameter
 import io.github.mrnuggelz.opensubsonic.responses.AlbumID3
 import io.github.mrnuggelz.opensubsonic.responses.AlbumList2
 import io.github.mrnuggelz.opensubsonic.responses.NowPlaying
@@ -26,21 +28,37 @@ public suspend fun OpenSubsonicClient.albumList(
     parameter("genre", genre)
 }.map { it.album }
 
+/**
+ * Returns starred songs, albums and artists.
+ */
 public suspend fun OpenSubsonicClient.getStarred(): Result<Starred> =
     openSubsonicRequest<Starred>(
         "getStarred",
         "starred"
     )
 
+/**
+ * Similar to getStarred, but organizes music according to ID3 tags.
+ */
 public suspend fun OpenSubsonicClient.getStarred2(): Result<Starred2> =
     openSubsonicRequest<Starred2>(
         "getStarred2",
         "starred2"
     )
 
+/**
+ * Returns what is currently being played by all users.
+ */
 public suspend fun OpenSubsonicClient.nowPlaying(): Result<List<NowPlayingSong>> =
     openSubsonicRequest<NowPlaying>("getNowPlaying", "nowPlaying").map { it.entries }
 
+/**
+ * Returns random songs matching the given criteria.
+ * @param size  The maximum number of songs to return. Max 500.
+ * @param genre Only returns songs belonging to this genre.
+ * @param fromYear Only return songs published after or in this year.
+ * @param toYear Only return songs published before or in this year.
+ */
 public suspend fun OpenSubsonicClient.randomSongs(
     size: Int? = null,
     genre: String? = null,

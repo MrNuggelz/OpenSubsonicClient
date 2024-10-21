@@ -1,10 +1,5 @@
-import io.github.mrnuggelz.opensubsonic.ListType
-import io.github.mrnuggelz.opensubsonic.albumList
-import io.github.mrnuggelz.opensubsonic.getStarred
-import io.github.mrnuggelz.opensubsonic.getStarred2
-import io.github.mrnuggelz.opensubsonic.nowPlaying
-import io.github.mrnuggelz.opensubsonic.randomSongs
-import io.github.mrnuggelz.opensubsonic.songsByGenre
+package io.github.mrnuggelz.opensubsonic.requests
+
 import io.kotest.core.spec.style.stringSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize

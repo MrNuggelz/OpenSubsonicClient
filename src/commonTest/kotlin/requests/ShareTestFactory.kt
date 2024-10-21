@@ -1,9 +1,6 @@
-import io.github.mrnuggelz.opensubsonic.ShareId
-import io.github.mrnuggelz.opensubsonic.createShare
-import io.github.mrnuggelz.opensubsonic.deleteShare
+package io.github.mrnuggelz.opensubsonic.requests
+
 import io.github.mrnuggelz.opensubsonic.responses.SongId
-import io.github.mrnuggelz.opensubsonic.shares
-import io.github.mrnuggelz.opensubsonic.updateShare
 import io.kotest.core.spec.style.stringSpec
 import responseexpectations.expectedShares
 

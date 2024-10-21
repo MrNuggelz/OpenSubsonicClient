@@ -1,3 +1,5 @@
+package io.github.mrnuggelz.opensubsonic.responses
+
 const val GetStarred2Response = """
 {
     "subsonic-response": {

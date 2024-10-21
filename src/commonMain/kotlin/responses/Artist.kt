@@ -1,7 +1,6 @@
 package io.github.mrnuggelz.opensubsonic.responses
 
-import io.github.mrnuggelz.opensubsonic.CoverArtId
-import io.github.mrnuggelz.opensubsonic.SongAlbumArtistId
+import io.github.mrnuggelz.opensubsonic.requests.CoverArtId
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmInline

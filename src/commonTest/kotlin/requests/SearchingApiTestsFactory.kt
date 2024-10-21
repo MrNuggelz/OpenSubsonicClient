@@ -1,12 +1,11 @@
-import io.github.mrnuggelz.opensubsonic.CoverArtId
-import io.github.mrnuggelz.opensubsonic.SearchResult
+package io.github.mrnuggelz.opensubsonic.requests
+
 import io.github.mrnuggelz.opensubsonic.responses.AlbumID3
 import io.github.mrnuggelz.opensubsonic.responses.AlbumId
 import io.github.mrnuggelz.opensubsonic.responses.ArtistID3
 import io.github.mrnuggelz.opensubsonic.responses.ArtistId
 import io.github.mrnuggelz.opensubsonic.responses.Song
 import io.github.mrnuggelz.opensubsonic.responses.SongId
-import io.github.mrnuggelz.opensubsonic.search
 import io.kotest.core.spec.style.stringSpec
 import kotlinx.datetime.Instant
 

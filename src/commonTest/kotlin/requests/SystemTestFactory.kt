@@ -1,8 +1,8 @@
-import io.github.mrnuggelz.opensubsonic.License
+package io.github.mrnuggelz.opensubsonic.requests
+
 import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
-import io.github.mrnuggelz.opensubsonic.OpenSubsonicError
-import io.github.mrnuggelz.opensubsonic.license
-import io.github.mrnuggelz.opensubsonic.ping
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicMockEngine
+import io.github.mrnuggelz.opensubsonic.responses.OpenSubsonicError
 import io.kotest.core.spec.style.stringSpec
 import kotlinx.datetime.Instant
 

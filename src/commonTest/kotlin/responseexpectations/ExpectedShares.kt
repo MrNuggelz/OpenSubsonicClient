@@ -1,7 +1,7 @@
 package responseexpectations
 
-import io.github.mrnuggelz.opensubsonic.Share
-import io.github.mrnuggelz.opensubsonic.ShareId
+import io.github.mrnuggelz.opensubsonic.requests.Share
+import io.github.mrnuggelz.opensubsonic.requests.ShareId
 import kotlinx.datetime.Instant
 
 val expectedShares = listOf(

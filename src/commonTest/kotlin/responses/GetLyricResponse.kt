@@ -1,3 +1,5 @@
+package io.github.mrnuggelz.opensubsonic.responses
+
 const val GetLyricResponse = """
 {
   "subsonic-response": {
