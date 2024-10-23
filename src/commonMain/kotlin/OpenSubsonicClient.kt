@@ -29,6 +29,24 @@ import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonObject
 import org.kotlincrypto.hash.md.MD5
 
+public class OpenSubsonicClientNonID3(
+    engine: HttpClientEngine,
+    serverUrl: String,
+    username: String,
+    password: String,
+    clientName: String,
+    debugRequest: suspend (HttpResponse.() -> Unit) = {},
+) : OpenSubsonicClient(engine, serverUrl, username, password, clientName, debugRequest)
+
+public class OpenSubsonicClientID3(
+    engine: HttpClientEngine,
+    serverUrl: String,
+    username: String,
+    password: String,
+    clientName: String,
+    debugRequest: suspend (HttpResponse.() -> Unit) = {},
+) : OpenSubsonicClient(engine, serverUrl, username, password, clientName, debugRequest)
+
 public open class OpenSubsonicClient(
     engine: HttpClientEngine,
     private val serverUrl: String,

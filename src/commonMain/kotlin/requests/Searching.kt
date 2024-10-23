@@ -1,6 +1,6 @@
 package io.github.mrnuggelz.opensubsonic.requests
 
-import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClientID3
 import io.github.mrnuggelz.opensubsonic.parameter
 import io.github.mrnuggelz.opensubsonic.responses.AlbumID3
 import io.github.mrnuggelz.opensubsonic.responses.ArtistID3
@@ -8,9 +8,9 @@ import io.github.mrnuggelz.opensubsonic.responses.Song
 import kotlinx.serialization.Serializable
 
 /**
- * Returns albums, artists and songs matching the given search criteria. Supports paging through the result. Music is organized according to ID3 tags.
+ * Returns albums, artists and songs matching the given search criteria. Supports paging through the result.
  */
-public suspend fun OpenSubsonicClient.search(
+public suspend fun OpenSubsonicClientID3.search(
     query: String,
     artistCount: Int = 20,
     artistOffset: Int = 0,

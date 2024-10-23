@@ -1,6 +1,8 @@
 package io.github.mrnuggelz.opensubsonic.requests
 
 import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClientID3
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClientNonID3
 import io.github.mrnuggelz.opensubsonic.parameter
 import io.github.mrnuggelz.opensubsonic.responses.AlbumId
 import io.github.mrnuggelz.opensubsonic.responses.ArtistId
@@ -12,11 +14,21 @@ import kotlinx.datetime.Instant
 /**
  * Attaches a star to a song, album or artist.
  * @param id The ID of the file (song) or folder (album/artist) to star.
- * @param albumId The ID of an album to star. Use this rather than id if the client accesses the media collection according to ID3 tags rather than file structure. Multiple parameters allowed.
- * @param artistId The ID of an artist to star. Use this rather than id if the client accesses the media collection according to ID3 tags rather than file structure. Multiple parameters allowed.
  */
-public suspend fun OpenSubsonicClient.star(
+public suspend fun OpenSubsonicClientNonID3.star(
     id: SongAlbumArtistId? = null,
+): Result<OpenSubsonicResponse> = openSubsonicRequest("star") {
+    parameter("id", id)
+}
+
+/**
+ * Attaches a star to a song, album or artist.
+ * @param id The ID of the song to star.
+ * @param albumId The ID of an album to star.
+ * @param artistId The ID of an artist to star.
+ */
+public suspend fun OpenSubsonicClientID3.star(
+    id: SongId? = null,
     albumId: AlbumId? = null,
     artistId: ArtistId? = null,
 ): Result<OpenSubsonicResponse> = openSubsonicRequest("star") {
@@ -28,11 +40,21 @@ public suspend fun OpenSubsonicClient.star(
 /**
  * Removes a star to a song, album or artist.
  * @param id The ID of the file (song) or folder (album/artist) to star.
- * @param albumId The ID of an album to star. Use this rather than id if the client accesses the media collection according to ID3 tags rather than file structure. Multiple parameters allowed.
- * @param artistId The ID of an artist to star. Use this rather than id if the client accesses the media collection according to ID3 tags rather than file structure. Multiple parameters allowed.
  */
-public suspend fun OpenSubsonicClient.unstar(
+public suspend fun OpenSubsonicClientNonID3.unstar(
     id: SongAlbumArtistId? = null,
+): Result<OpenSubsonicResponse> = openSubsonicRequest("unstar") {
+    parameter("id", id)
+}
+
+/**
+ * Removes a star to a song, album or artist.
+ * @param id The ID of the song to star.
+ * @param albumId The ID of an album to star.
+ * @param artistId The ID of an artist to star.
+ */
+public suspend fun OpenSubsonicClientID3.unstar(
+    id: SongId? = null,
     albumId: AlbumId? = null,
     artistId: ArtistId? = null,
 ): Result<OpenSubsonicResponse> = openSubsonicRequest("unstar") {
