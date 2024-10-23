@@ -1,20 +1,23 @@
 package io.github.mrnuggelz.opensubsonic.requests
 
+import io.github.mrnuggelz.opensubsonic.mockClientID3
+import io.github.mrnuggelz.opensubsonic.mockClientNonID3
 import io.kotest.core.spec.style.stringSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 
 val albumSongListsAPITestFactory = stringSpec {
     responseShouldBe(
-        "albumList",
+        "ID3 - albumList",
         "album list",
-        methodCall = { albumList(ListType.random) }
+        mockClientID3,
+        { albumList(ListType.random) },
     ) { it shouldHaveSize 2 }
 
     responseShouldBe(
         "randomSongs",
         "album list",
-        methodCall = { randomSongs(1) }
+        { randomSongs(1) }
     ) { resp ->
         resp.songs.map {
             it.id.value
@@ -24,19 +27,20 @@ val albumSongListsAPITestFactory = stringSpec {
     responseShouldBe(
         "nowPlaying",
         "currently playing songs",
-        methodCall = { nowPlaying() }
+        { nowPlaying() }
     ) { it shouldHaveSize 1 }
 
     responseShouldBe(
         "songsByGenre",
         "electronic songs",
-        methodCall = { songsByGenre("Electronic", 1) }
+        { songsByGenre("Electronic", 1) }
     ) { it shouldHaveSize 1 }
 
     responseShouldBe(
-        "getStarred",
+        "NonID3 - getStarred",
         "starred albums, artists and songs",
-        methodCall = { getStarred() }
+        mockClientNonID3,
+        { getStarred() }
     ) {
         it.album.shouldHaveSize(2)
         it.artist.shouldHaveSize(2)
@@ -44,9 +48,10 @@ val albumSongListsAPITestFactory = stringSpec {
     }
 
     responseShouldBe(
-        "getStarred2",
+        "ID3 - getStarred",
         "starred albums, artists and songs",
-        methodCall = { getStarred2() }
+        mockClientID3,
+        methodCall = { getStarred() }
     ) {
         it.album.shouldHaveSize(2)
         it.artist.shouldHaveSize(2)

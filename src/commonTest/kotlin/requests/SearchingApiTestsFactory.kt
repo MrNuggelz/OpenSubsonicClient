@@ -1,5 +1,6 @@
 package io.github.mrnuggelz.opensubsonic.requests
 
+import io.github.mrnuggelz.opensubsonic.mockClientID3
 import io.github.mrnuggelz.opensubsonic.responses.AlbumID3
 import io.github.mrnuggelz.opensubsonic.responses.AlbumId
 import io.github.mrnuggelz.opensubsonic.responses.ArtistID3
@@ -11,7 +12,7 @@ import kotlinx.datetime.Instant
 
 val searchingAPITestFactory = stringSpec {
     expectResponse(
-        "search",
+        "ID3 - search",
         "expected album, artist and song",
         SearchResult(
             listOf(
@@ -66,6 +67,7 @@ val searchingAPITestFactory = stringSpec {
                     played = "2023-03-26T22:27:46Z",
                 )
             )
-        )
+        ),
+        mockClientID3,
     ) { search("2 Mello", 1, 0, 1, 0, 1) }
 }

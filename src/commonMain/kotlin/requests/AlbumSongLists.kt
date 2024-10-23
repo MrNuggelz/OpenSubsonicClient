@@ -1,6 +1,8 @@
 package io.github.mrnuggelz.opensubsonic.requests
 
 import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClientID3
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClientNonID3
 import io.github.mrnuggelz.opensubsonic.parameter
 import io.github.mrnuggelz.opensubsonic.responses.AlbumID3
 import io.github.mrnuggelz.opensubsonic.responses.AlbumList2
@@ -12,7 +14,7 @@ import io.github.mrnuggelz.opensubsonic.responses.Songs
 import io.github.mrnuggelz.opensubsonic.responses.Starred
 import io.github.mrnuggelz.opensubsonic.responses.Starred2
 
-public suspend fun OpenSubsonicClient.albumList(
+public suspend fun OpenSubsonicClientID3.albumList(
     type: ListType,
     size: Int = 10,
     offset: Int = 0,
@@ -31,20 +33,14 @@ public suspend fun OpenSubsonicClient.albumList(
 /**
  * Returns starred songs, albums and artists.
  */
-public suspend fun OpenSubsonicClient.getStarred(): Result<Starred> =
-    openSubsonicRequest<Starred>(
-        "getStarred",
-        "starred"
-    )
+public suspend fun OpenSubsonicClientNonID3.getStarred(): Result<Starred> =
+    openSubsonicRequest<Starred>("getStarred", "starred")
 
 /**
- * Similar to getStarred, but organizes music according to ID3 tags.
+ * Returns starred songs, albums and artists.
  */
-public suspend fun OpenSubsonicClient.getStarred2(): Result<Starred2> =
-    openSubsonicRequest<Starred2>(
-        "getStarred2",
-        "starred2"
-    )
+public suspend fun OpenSubsonicClientID3.getStarred(): Result<Starred2> =
+    openSubsonicRequest<Starred2>("getStarred2", "starred2")
 
 /**
  * Returns what is currently being played by all users.

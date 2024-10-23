@@ -1,6 +1,8 @@
 package io.github.mrnuggelz.opensubsonic.requests
 
 import io.github.mrnuggelz.opensubsonic.OpenSubsonicClient
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClientID3
+import io.github.mrnuggelz.opensubsonic.OpenSubsonicClientNonID3
 import io.github.mrnuggelz.opensubsonic.parameter
 import io.github.mrnuggelz.opensubsonic.responses.Album
 import io.github.mrnuggelz.opensubsonic.responses.AlbumId
@@ -22,21 +24,21 @@ public suspend fun OpenSubsonicClient.song(id: SongId): Result<Song> =
     openSubsonicRequest("getSong", "song") { parameter("id", id) }
 
 /**
- * Returns all artists. This method organizes music according to ID3 tags.
+ * Returns all artists
  */
-public suspend fun OpenSubsonicClient.artists(): Result<Artists> =
+public suspend fun OpenSubsonicClientID3.artists(): Result<Artists> =
     openSubsonicRequest("getArtists", "artists")
 
 /**
- * Returns details for an artist, including a list of albums. This method organizes music according to ID3 tags.
+ * Returns details for an artist, including a list of albums.
  */
-public suspend fun OpenSubsonicClient.artist(id: ArtistId): Result<Artist> =
+public suspend fun OpenSubsonicClientID3.artist(id: ArtistId): Result<Artist> =
     openSubsonicRequest("getArtist", "artist") { parameter("id", id) }
 
 /**
- * Returns details for an album, including a list of songs. This method organizes music according to ID3 tags.
+ * Returns details for an album, including a list of songs.
  */
-public suspend fun OpenSubsonicClient.album(id: AlbumId): Result<Album> =
+public suspend fun OpenSubsonicClientID3.album(id: AlbumId): Result<Album> =
     openSubsonicRequest("getAlbum", "album") { parameter("id", id) }
 
 public suspend fun OpenSubsonicClient.genres(): Result<List<Genre>> =
@@ -47,7 +49,7 @@ public suspend fun OpenSubsonicClient.genres(): Result<List<Genre>> =
  * @param id The artist, album or song ID.
  * @param includeNotPresent Whether to return artists that are not present in the media library.
  */
-public suspend fun OpenSubsonicClient.artistInfo(
+public suspend fun OpenSubsonicClientNonID3.artistInfo(
     id: SongAlbumArtistId,
     count: Int = 20,
     includeNotPresent: Boolean = false,
@@ -59,11 +61,11 @@ public suspend fun OpenSubsonicClient.artistInfo(
     }
 
 /**
- * Similar to [artistInfo], but organizes music according to ID3 tags.
+ * Returns artist info with biography, image URLs and similar artists, using data from last.fm.
  * @param id The artist, album or song ID.
  * @param includeNotPresent Whether to return artists that are not present in the media library.
  */
-public suspend fun OpenSubsonicClient.artistInfo2(
+public suspend fun OpenSubsonicClientID3.artistInfo(
     id: SongAlbumArtistId,
     count: Int = 20,
     includeNotPresent: Boolean = false,
@@ -78,14 +80,14 @@ public suspend fun OpenSubsonicClient.artistInfo2(
  * Returns album notes, image URLs etc, using data from last.fm.
  * @param id The album ID or song ID
  */
-public suspend fun OpenSubsonicClient.albumInfo(id: SongAlbumId): Result<AlbumInfo> =
+public suspend fun OpenSubsonicClientNonID3.albumInfo(id: SongAlbumId): Result<AlbumInfo> =
     openSubsonicRequest("getAlbumInfo", "albumInfo") { parameter("id", id) }
 
 /**
- * Similar to [albumInfo], but organizes music according to ID3 tags.
+ * Returns album notes, image URLs etc, using data from last.fm.
  * @param id The album ID or song ID
  */
-public suspend fun OpenSubsonicClient.albumInfo2(id: SongAlbumId): Result<AlbumInfo> =
+public suspend fun OpenSubsonicClientID3.albumInfo(id: SongAlbumId): Result<AlbumInfo> =
     openSubsonicRequest("getAlbumInfo2", "albumInfo") { parameter("id", id) }
 
 /**
@@ -103,7 +105,7 @@ public suspend fun OpenSubsonicClient.topSongs(
 /**
  * Returns a random collection of songs, limited by [count], from the given artist and similar artists, using data from last.fm.
  */
-public suspend fun OpenSubsonicClient.similarSongs(
+public suspend fun OpenSubsonicClientNonID3.similarSongs(
     id: SongAlbumArtistId,
     count: Int = 50,
 ): Result<List<Song>> =
@@ -113,9 +115,9 @@ public suspend fun OpenSubsonicClient.similarSongs(
     }.map { it.song }
 
 /**
- * Similar to [similarSongs], but organizes music according to ID3 tags.
+ * Returns a random collection of songs, limited by [count], from the given artist and similar artists, using data from last.fm.
  */
-public suspend fun OpenSubsonicClient.similarSongs2(
+public suspend fun OpenSubsonicClientID3.similarSongs(
     id: SongAlbumArtistId,
     count: Int = 50,
 ): Result<List<Song>> =
@@ -125,6 +127,4 @@ public suspend fun OpenSubsonicClient.similarSongs2(
     }.map { it.song }
 
 @Serializable
-private data class Genres(
-    val genre: List<Genre>
-)
+private data class Genres(val genre: List<Genre>)

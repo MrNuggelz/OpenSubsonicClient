@@ -85,6 +85,22 @@ val mockClient = OpenSubsonicClient(
     "testClient",
 )
 
+val mockClientID3 = OpenSubsonicClientID3(
+    OpenSubsonicMockEngine,
+    "http://localhost",
+    "test",
+    "sesame",
+    "testClient",
+)
+
+val mockClientNonID3 = OpenSubsonicClientNonID3(
+    OpenSubsonicMockEngine,
+    "http://localhost",
+    "test",
+    "sesame",
+    "testClient",
+)
+
 fun Url.handleParameters(expectedParameters: Parameters, response: String): String =
     if (parameters.filter { name, _ -> name !in listOf("u", "c", "f", "v", "s", "t") } == expectedParameters) {
         response
@@ -306,14 +322,14 @@ fun Url.handlePath() = when (segments.last()) {
 
     "star" -> handleParameters(
         parameters {
-            append("albumId", "1")
+            append("id", "1")
         },
         SubsonicResponse
     )
 
     "unstar" -> handleParameters(
         parameters {
-            append("albumId", "1")
+            append("id", "1")
         },
         SubsonicResponse
     )

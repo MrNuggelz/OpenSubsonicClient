@@ -1,5 +1,7 @@
 package io.github.mrnuggelz.opensubsonic.requests
 
+import io.github.mrnuggelz.opensubsonic.mockClientID3
+import io.github.mrnuggelz.opensubsonic.mockClientNonID3
 import io.github.mrnuggelz.opensubsonic.responses.AlbumId
 import io.github.mrnuggelz.opensubsonic.responses.ArtistID3
 import io.github.mrnuggelz.opensubsonic.responses.ArtistId
@@ -14,14 +16,14 @@ import responseexpectations.expectedAlbum
 import responseexpectations.expectedSong
 
 val browsingAPITestFactory = stringSpec {
-    expectResponse("album", "the album", expectedAlbum) {
+    expectResponse("ID3 - album", "the album", expectedAlbum, mockClientID3) {
         album(AlbumId("a70f5f4d781dfa00020e8023698318c0"))
     }
     expectResponse("song", "the song", expectedSong) {
         song(SongId("a70f5f4d781dfa00020e8023698318c0"))
     }
     expectResponse(
-        "artists",
+        "ID3 - artists",
         "artists",
         Artists(
             ignoredArticles = "The An A Die Das Ein Eine Les Le La",
@@ -55,7 +57,8 @@ val browsingAPITestFactory = stringSpec {
                     )
                 )
             )
-        )
+        ),
+        mockClientID3,
     ) { artists() }
     expectResponse(
         "genres",
@@ -70,32 +73,46 @@ val browsingAPITestFactory = stringSpec {
             Genre(value = "Hip-Hop", songCount = 20, albumCount = 1)
         )
     ) { genres() }
-    responseShouldBe("artist", "the artist", methodCall = { artist(ArtistId("a70f5f4d781dfa00020e8023698318c0")) }) {
+    responseShouldBe("ID3 - artist", "the artist", mockClientID3, {
+        artist(ArtistId("a70f5f4d781dfa00020e8023698318c0"))
+    }) {
         it.id.value shouldBe "100000002"
     }
-    responseShouldBe("artistInfo", "info of the artist", methodCall = { artistInfo(ArtistId("someId"), 2) }) {
+    responseShouldBe(
+        "NonID3 - artistInfo",
+        "info of the artist",
+        mockClientNonID3,
+        { artistInfo(ArtistId("someId"), 2) }
+    ) {
         it.musicBrainzId shouldBe "1"
     }
-    responseShouldBe("artistInfo2", "info of the artist", methodCall = { artistInfo2(ArtistId("someId"), 2) }) {
+    responseShouldBe("ID3 - artistInfo", "info of the artist", mockClientID3, { artistInfo(ArtistId("someId"), 2) }) {
         it.musicBrainzId shouldBe "1"
     }
     responseShouldBe(
-        "albumInfo",
+        "NonID3 - albumInfo",
         "album info",
-        methodCall = { albumInfo(AlbumId("a70f5f4d781dfa00020e8023698318c0")) }
+        mockClientNonID3,
+        { albumInfo(AlbumId("a70f5f4d781dfa00020e8023698318c0")) }
     ) { it.musicBrainzId shouldBe "6e1d48f7-717c-416e-af35-5d2454a13af2" }
     responseShouldBe(
-        "albumInfo2",
+        "ID3 - albumInfo",
         "album info",
-        methodCall = { albumInfo2(AlbumId("a70f5f4d781dfa00020e8023698318c0")) }
+        mockClientID3,
+        { albumInfo(AlbumId("a70f5f4d781dfa00020e8023698318c0")) }
     ) { it.musicBrainzId shouldBe "6e1d48f7-717c-416e-af35-5d2454a13af2" }
-    responseShouldBe("topSongs", "the top songs", methodCall = { topSongs("someArtist", 2) }) {
+    responseShouldBe("topSongs", "the top songs", { topSongs("someArtist", 2) }) {
         it shouldHaveSize 2
     }
-    responseShouldBe("similarSongs", "similar songs", methodCall = { similarSongs(SongId("someId"), 2) }) {
+    responseShouldBe(
+        "NonID3 - similarSongs",
+        "similar songs",
+        mockClientNonID3,
+        { similarSongs(SongId("someId"), 2) }
+    ) {
         it shouldHaveSize 2
     }
-    responseShouldBe("similarSongs2", "similar songs", methodCall = { similarSongs2(ArtistId("someId"), 2) }) {
+    responseShouldBe("ID3 - similarSongs", "similar songs", mockClientID3, { similarSongs(ArtistId("someId"), 2) }) {
         it shouldHaveSize 2
     }
 }
