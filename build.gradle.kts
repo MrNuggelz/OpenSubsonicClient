@@ -66,7 +66,7 @@ val detekt by configurations.creating
 
 dependencies {
     detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.23.7")
-    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.6")
+    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.7")
 }
 
 tasks.register<JavaExec>("detekt") {
