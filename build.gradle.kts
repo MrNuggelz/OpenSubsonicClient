@@ -58,7 +58,7 @@ kotlin {
         jvmTest.dependencies {
             implementation(libs.slf4jSimple)
             implementation(libs.kotest.junit)
-            implementation("io.ktor:ktor-client-cio:3.0.0")
+            implementation("io.ktor:ktor-client-cio:3.0.1")
         }
     }
 }
@@ -66,7 +66,7 @@ val detekt by configurations.creating
 
 dependencies {
     detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.23.7")
-    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.6")
+    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.7")
 }
 
 tasks.register<JavaExec>("detekt") {
