@@ -15,7 +15,7 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core",
 kotest-frameworkEngine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest"}
 kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest"}
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor"}
-cryptohash = { module = "org.kotlincrypto.hash:md", version = "0.5.3"} # used for md5 hashing
+cryptohash = { module = "org.kotlincrypto.hash:md", version = "0.5.6"} # used for md5 hashing
 
 # jvm
 kotest-junit = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest"}
